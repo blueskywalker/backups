@@ -1,0 +1,14 @@
+com/sysomos/jerry/test/custom/query/NewsDateInfluenceCustomQuery$NewsDateInfluenceCustomScoreProvider.class
+com/sysomos/jerry/test/custom/query/NewsDateInfluenceCustomQuery.class
+com/sysomos/jerry/test/custom/function/DateDayStandardParser$1$1.class
+com/sysomos/jerry/test/custom/field/TrieLongDateField.class
+com/sysomos/jerry/test/solr/RfcSearcher.class
+com/sysomos/jerry/test/custom/function/NewsDateInfluenceRanking.class
+com/sysomos/jerry/test/custom/function/NewsDateInfluenceRanking$1.class
+com/sysomos/jerry/test/custom/function/DateDayStandardParser$1.class
+com/sysomos/jerry/test/custom/query/NewsDateInfluenceCustomQParserPlugin.class
+com/sysomos/jerry/test/custom/function/DateDayStandardParser.class
+com/sysomos/jerry/test/custom/function/NewsDateInfluenceRankingParser.class
+com/sysomos/jerry/test/solr/SolrIndexer.class
+com/sysomos/jerry/test/solr/RfcIndexer.class
+com/sysomos/jerry/test/custom/query/NewsDateInfluenceCustomQParserPlugin$NewsDataInfluenceCustomParser.class

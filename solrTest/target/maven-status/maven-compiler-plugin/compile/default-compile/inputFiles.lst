@@ -1,0 +1,9 @@
+/Users/kkim/source/my_projects/solrTest/src/main/java/com/sysomos/jerry/test/custom/function/DateDayStandardParser.java
+/Users/kkim/source/my_projects/solrTest/src/main/java/com/sysomos/jerry/test/custom/query/NewsDateInfluenceCustomQParserPlugin.java
+/Users/kkim/source/my_projects/solrTest/src/main/java/com/sysomos/jerry/test/solr/RfcIndexer.java
+/Users/kkim/source/my_projects/solrTest/src/main/java/com/sysomos/jerry/test/solr/SolrIndexer.java
+/Users/kkim/source/my_projects/solrTest/src/main/java/com/sysomos/jerry/test/custom/function/NewsDateInfluenceRanking.java
+/Users/kkim/source/my_projects/solrTest/src/main/java/com/sysomos/jerry/test/custom/query/NewsDateInfluenceCustomQuery.java
+/Users/kkim/source/my_projects/solrTest/src/main/java/com/sysomos/jerry/test/custom/field/TrieLongDateField.java
+/Users/kkim/source/my_projects/solrTest/src/main/java/com/sysomos/jerry/test/solr/RfcSearcher.java
+/Users/kkim/source/my_projects/solrTest/src/main/java/com/sysomos/jerry/test/custom/function/NewsDateInfluenceRankingParser.java
