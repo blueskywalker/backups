@@ -1,0 +1,138 @@
+set nocompatible
+filetype off
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" BEGIN Vundle
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+""
+"syntastic
+Plugin 'scrooloose/syntastic'
+
+""
+"airline
+Plugin 'bling/vim-airline'
+
+""
+" pydoc
+" Plugin 'fs111/pydoc.vim'
+
+""
+" python mode
+"Plugin 'klen/python-mode'
+
+""
+" Ruby mode
+"
+Plugin 'vim-ruby/vim-ruby'
+
+""
+" ri.vim
+"Plugin 'danchoi/ri.vim'
+
+""
+" vim-ruby-doc
+Plugin 'lucapette/vim-ruby-doc'
+
+
+""
+" vim-rails
+Plugin 'tpope/vim-rails'
+
+""
+" vim-bundler
+Plugin 'tpope/vim-bundler'
+
+""
+" Fugitive (GIT)
+Plugin 'tpope/vim-fugitive'
+
+
+""
+" Tagbar
+Plugin 'majutsushi/tagbar'
+
+""
+" YCM (Autocompletion)  
+Plugin 'Valloric/YouCompleteMe'
+
+""
+" Track the engine. 
+"Plugin 'SirVer/ultisnips'
+
+""
+" Snippets are seperated from the engine. Add this if you want them
+"Plugin 'honza/vim-snippets'
+
+
+""
+" GO LANGUAGE
+Plugin 'fatih/vim-go'
+
+""
+" BASH
+Plugin 'vim-scripts/bash-support.vim'
+
+call vundle#end()
+"
+" END Vundle Installation
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+filetype plugin on
+filetype indent on
+
+""
+" airline
+let g:airline#extension#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
+
+""
+" syntastic
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args = '--ignore="E501,E302"'
+let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_ruby_mri_cher = 1
+
+""
+" vim_ruby_doc
+"
+let g:ruby_doc_command='open'
+let g:ruby_doc_ruby_mapping='KK'
+
+""
+" vim ruby exec
+:map <leader>r :!ruby %<cr>
+
+""
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
+
+""
+" Trigger configuration. Don not use <tab> if you use YCM
+" let g:UltiSnipsExpandTrigger="<tab>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"
+" If you ant :UltiSnipsEdit to split your window
+" let g:UltiSnipsEditSplit="vertical"
+
+""
+" Bash
+let g:BASH_AuthorName = 'Kyung (Jerry) Kim'
+let g:BASH_Email = 'kkim@sysomos.com'
+let g:BASH_Company = 'Sysomos Inc.'
+
+""
+syntax on
+
+""
+" set ts=4,sw=4,expandtab
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set encoding=utf-8
+
+""
+" status line
+set laststatus=2
