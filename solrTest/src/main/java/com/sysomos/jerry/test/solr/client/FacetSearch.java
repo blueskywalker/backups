@@ -6,6 +6,7 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.CloudSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.RangeFacet;
+import org.apache.solr.schema.DateField;
 import org.apache.solr.update.SolrCmdDistributor;
 
 import java.net.MalformedURLException;
@@ -27,6 +28,7 @@ public class FacetSearch {
         Date sDate = new Date(1414800000000L);
         Date eDate = new Date(1417392000000L);
 
+
         CloudSolrServer solr = null;
         try {
             solr = new CloudSolrServer(zk_hosts);
@@ -46,6 +48,7 @@ public class FacetSearch {
             QueryResponse response = solr.query(query);
 
             System.out.println("OK");
+            System.out.println(response.getResults().getNumFound());
             for (RangeFacet range : response.getFacetRanges()) {
                 System.out.println(range.getName());
                 for( Object count : range.getCounts()) {
