@@ -1,0 +1,78 @@
+
+##
+# source aliases
+function source_alias()
+{
+    [[ -f ~/.aliases ]] && source ~/.aliases
+}
+
+##
+# JAVA_HOME
+function java_home()
+{
+    JAVA_HOME=$(/usr/libexec/java_home -v 1.7);export JAVA_HOME
+}
+
+##
+# set LS colors
+function ls_color()
+{
+    export LSCOLORS="Gxfxcxdxbxegedabagacad"
+}
+
+##
+# bash_completion
+
+function bash_completion()
+{
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    source $(brew --prefix)/etc/bash_completion
+    fi
+}
+
+##
+# powerline
+
+function prompt_powerline
+{
+POWERLINE_PATH=$(python -c 'import pkgutil; print pkgutil.get_loader("powerline").filename' 2> /dev/null)
+if [ "${TERM_PROGRAM}" == "iTerm.app" ]; then
+    if [ -f $POWERLINE_PATH/bindings/bash/powerline.sh ]; then
+        source $POWERLINE_PATH/bindings/bash/powerline.sh
+    fi
+#elif [ ${TERM_PROGRAM}" == "Apple_Terminal" ]; then
+else
+    source $HOME/local/share/liquidprompt/liquidprompt 
+fi
+}
+
+##
+# PATH
+function set_path
+{
+    export PATH="/usr/local/heroku/bin:/usr/local/sbin:$PATH"
+}
+
+##
+# GO
+# set GOPATH
+function gopath
+{
+    export GOROOT=/usr/local/go
+    export GOPATH=/Users/kkim/workspace/gopath
+    export PATH=$GOPATH/bin:$PATH
+}
+
+#########
+#
+#  all settings
+#
+set_path
+java_home
+ls_color
+bash_completion
+prompt_powerline
+gopath
+source_alias
+
+### Added by the Heroku Toolbelt
