@@ -90,17 +90,17 @@ def collection_api(node,command)
 end
 
 
-CommandOption.parse
+#CommandOption.parse
+#puts CommandOption.cluster
 
-puts CommandOption.cluster
 
 solr=SolrCloud.new(CommandOption.zkhost,'/solr')
 
 case CommandOption.command
 when :lives
-    solr.lives
+    puts solr.lives
 when :status
-    solr.status 
+    puts solr.status 
 end
 
 # puts "#{nodes[0]}"
