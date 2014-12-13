@@ -50,7 +50,7 @@ fi
 # PATH
 function set_path
 {
-    export PATH="/usr/local/heroku/bin:/usr/local/sbin:$PATH"
+    export PATH="$HOME/local/bin:/usr/local/heroku/bin:/usr/local/sbin:$PATH"
 }
 
 ##
@@ -61,6 +61,19 @@ function gopath
     export GOROOT=/usr/local/go
     export GOPATH=/Users/kkim/workspace/gopath
     export PATH=$GOPATH/bin:$PATH
+}
+
+##
+# TAB TITLE
+function title {
+    echo -ne "\033]0;"$*"\007"
+}
+
+####
+# Set locale
+function locale {
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
 }
 
 #########
@@ -74,5 +87,6 @@ bash_completion
 prompt_powerline
 gopath
 source_alias
+locale
 
 ### Added by the Heroku Toolbelt
