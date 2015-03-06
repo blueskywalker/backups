@@ -1,0 +1,53 @@
+;;
+;;  emacs init.el
+;;
+
+(require 'cask "/usr/local/Cellar/cask/0.7.2/cask.el")
+(cask-initialize)
+(require 'pallet)
+(pallet-mode t)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(require 'package)
+(add-to-list 'package-archives
+	     '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives
+	     '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(package-initialize)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+:::::
+;; auto-completion
+;;
+(require 'auto-complete-config)
+(add-to-list 'ac-dictionary-directories
+	     "/Users/kkim/.emacs.d/.cask/24.4.1/elpa/auto-complete-20141111.2346/dict" )
+(ac-config-default)
+(setq ac-ignore-case nil)
+(add-to-list 'ac-modes 'enh-ruby-mode)
+(add-to-list 'ac-modes 'web-mode)
+
+;;
+;; Siver_searcher
+(require 'ag)
+
+;;
+;; powerline
+(require 'powerline)
+(powerline-default-theme)
+
+;;
+
+(require 'go-autocomplete)
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; robe (RUBY)
+
+(add-hook 'enh-ruby-mode-hook 'robe-mode)
+(add-hook 'enh-robe-mode-hook 'ac-robe-setup)
+(add-hook 'enh-ruby-mode-hook 'yard-mode)
