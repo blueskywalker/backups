@@ -19,10 +19,11 @@ ZK_STAGING='rtzk01:2181,rtzk02:2181,rtzk03:2181'
 ZK_PROD='srzk01:2181,srzk02:2181,srzk03:2181'
 #ZK_BACKUP='bkzk34058:2181,bkzk34047:2181,bkzk34063:2181'
 ZK_BACKUP='bkzk34058:2181,bkzk34047:2181,bkzk34063:2181,dsadtt03:2181,dsadtt04:2181'
+TEST_SOLR='solrzktst01:2181,solrzktst02:2181,solrzktst03:2181'
 
 class CommandOption
-  @@commands=[ :lives, :monitor, :status, :aliases, :collection, :get ,:ls, :push_key, :service, :query, :fetch ]
-  @@clusters={ :dev => ZK_DEV, :staging => ZK_STAGING, :prod => ZK_PROD, :backup => ZK_BACKUP }
+  @@commands=[ :lives, :status, :aliases, :collection, :get ,:ls, :put, :push_key, :service, :query, :fetch ]
+  @@clusters={ :dev => ZK_DEV, :staging => ZK_STAGING, :prod => ZK_PROD, :backup => ZK_BACKUP , :testing => TEST_SOLR}
   @@options = {}
 
   def self.parse()
@@ -94,15 +95,8 @@ class SolrCloud
     JSON.parse(@zookeeper.get(:path => "#{@solr_root}/clusterstate.json")[:data])
   end
 
-  def monitor
-    json = JSON.parse(@zookeeper.get(:path => "#{@solr_root}/clusterstate.json")[:data])
-    json.each do | collection |
-      name, shards =collection
-      shards["shards"].each do |shard|
-        core,info = shard
-        puts "#{name} #{core} #{info["state"]}" if info["state"]!="active"
-      end
-    end
+  def stat(collection)
+    self.get "#{@solr_root}/collections/#{collection}/state.json" if self.collections.include? collection
   end
 
   def ls(path)
@@ -111,6 +105,15 @@ class SolrCloud
 
   def get(path)
     @zookeeper.get(:path => path)[:data]
+  end
+
+  def put(dest,datafile)
+    data = File.read(datafile)
+    @zookeeper.set(:path => dest, :data => data)
+  end
+
+  def root
+    @solr_root
   end
 end
 
@@ -281,8 +284,7 @@ class SolrNode
   end 
 
   def self.from_zk(node)
-    host_name, tmp =node.split(':')
-    port_number,base_url = tmp.split('_')
+    host_name, port_number, base_url = node.split(/:_/)
     SolrNode.new(host_name,port_number,base_url)
   end
 
@@ -318,9 +320,12 @@ end
 
 class SolrAdmin < SolrNode
   def collection(cmd) 
-    host="http://#{node}:#{port}/admin/collections"
+    host="#{self.url}/admin/collections"
+    cmd['wt']='json' if not cmd.has_key?('wt')
+    cmd['indent']='true' if not cmd.has_key?('indent')
     begin
       response = RestClient.get(host, {:params => cmd })
+      puts cmd
       puts response.code
       puts response
     rescue => e
@@ -328,6 +333,18 @@ class SolrAdmin < SolrNode
     end
   end
 
+  def delete(collection,id)
+    host="#{self.url}/#{collection}/update/json"
+    header = {:content_type =>'json'}
+    delete_json = "{'delete':{'id':#{id}}}"
+    RestClient.post host,delete_json,:content_type => 'json'
+  end
+
+  def self.from_lives(lives)
+    node = lives[rand(lives.size)]
+    host,port,base = node.split(/_:/)
+    SolrAdmin.new(host,port,base)
+  end
 end
 
 def mprocess(nodes)
@@ -385,16 +402,26 @@ class ExecuteCommand
     puts solr.status.to_json
   end
 
-  def monitor(args) 
-    solr.monitor
-  end
-
   def collection(args)
-    puts solr.collections
+     if args.size == 0 then
+       puts solr.collections
+     else
+       case args[0]
+       when 'create'
+         self.collection_create args[1..-1]
+       when 'reload'
+         self.collection_reload args[1..-1]
+       when 'delete'
+         self.collection_delete args[1..-1]
+       else
+         puts "wrong command please check command"
+       end
+     end
+     
   end
 
   def aliases(args)
-    solr.aliases.each do |k,v| 
+    solr.aliases.each do |k,v|
       puts "#{k} : #{v}"
     end
   end
@@ -412,6 +439,14 @@ class ExecuteCommand
       puts "need apth"
     else
       puts solr.get args[0]
+    end
+  end
+
+  def put(args)
+    if args.size < 2 then
+      puts "need dest path"
+    else
+      solr.put args[0], args[1]
     end
   end
 
@@ -485,6 +520,72 @@ class ExecuteCommand
     rescue ArgumentError => e
       puts e
     end 
+  end
+
+  def collection_create(args)
+    admin = SolrAdmin.from_lives(solr.lives)
+    if args.size > 0 then
+      cmd = { :action => 'CREATE', :name => 'default', 'numShards' => 1, 'replicationFactor' => 1, 'maxShardsPerNode' => 1}
+      opts = JSON.parse(args[1]) if args.size > 1
+      opts.each do |k,v|
+        cmd[k]=v
+      end
+      cmd[:name]=args[0]
+      p args[0]
+      admin.collection(cmd)
+    end
+  end
+
+  def collection_reload(args)
+    admin = SolrAdmin.from_lives(solr.lives)
+
+    if args.size == 0 then
+      print "are you sure to reload all collections? [y/N]"
+      case $stdin.gets.strip 
+      when 'Y','y'
+        solr.collections.each do |c|
+          puts c
+          admin.collection( :action => 'RELOAD', :name => c)
+        end
+      end
+    else
+      args.each do |c|
+        puts c
+        admin.collection( :action => 'RELOAD', :name => c)
+      end
+    end
+  end
+
+  def collection_delete(args)
+    admin = SolrAdmin.from_lives(solr.lives)
+    if args.size == 0 then
+      print "are you sure to delete all collections? [y/N]"
+      case $stdin.gets.strip 
+      when 'Y','y'
+        solr.collections.each do |c|
+          puts c
+          admin.collection( :action => 'DELETE', :name => c)
+        end
+      end
+    else
+      args.each do |c|
+        puts c
+        admin.collection( :action => 'DELETE', :name => c)
+      end
+    end
+  end
+
+  def delete(args)
+    if args.size > 1 then
+      collection = args[0] 
+      if solr.collections.include? collection
+         stat=JSON.parse(solr.stat(collection))
+         node=stat[collection]['shards']['shard1']['replicas']['core_node1']['node_name']
+         host,port,base = node.split(/_:/)
+         admin = SolrAdmin.new(host,port,base)
+         admin.delete collection, args[1]
+      end
+    end
   end
 end
 
