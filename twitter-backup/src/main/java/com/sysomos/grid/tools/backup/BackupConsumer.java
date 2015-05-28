@@ -1,0 +1,115 @@
+package com.sysomos.grid.tools.backup;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataOutputStream;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.log4j.Logger;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.zip.GZIPOutputStream;
+
+/**
+ * Created by kkim on 5/28/15.
+ */
+public class BackupConsumer extends Thread {
+
+    protected static Logger logger = Logger.getLogger(BackupConsumer.class);
+
+    public final static String BACKUP_DIR_KEY = "backup.dir";
+    public final static String HADOOP_CONF_DIR = "hadoop.conf.dir";
+    public final static String BACKUP_MESSAGE_PER_FILE = "backup.file.message.count";
+
+    private final ArrayBlockingQueue<String> queue;
+    private final Properties properties;
+    private final FileSystem fs;
+    private boolean done;
+    private GZIPOutputStream gzip;
+    private static AtomicInteger fileCounter = new AtomicInteger(0);
+    private final int messageCount;
+    private String fileName;
+
+    public BackupConsumer(final ArrayBlockingQueue<String> queue, final Properties properties) throws IOException {
+        this.queue = queue;
+        this.properties = properties;
+        Configuration configuration = new Configuration();
+        String baseDir = properties.getProperty(HADOOP_CONF_DIR, "/etc/hadoop/conf");
+        configuration.addResource(new Path(String.format("%s/core-site.xml", baseDir)));
+        configuration.addResource(new Path(String.format("%s/hdfs-site.xml", baseDir)));
+        fs = FileSystem.get(configuration);
+        done = false;
+        messageCount = Integer.valueOf(properties.getProperty(BACKUP_MESSAGE_PER_FILE,"100000"));
+    }
+
+
+    protected void open() throws IOException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHH");
+        long currentTime = System.currentTimeMillis();
+        String hour = format.format(new Date(currentTime));
+        String rootDir = String.format("%s/%s", properties.getProperty(BACKUP_DIR_KEY, "/backup"), hour);
+
+        Path rootPath = new Path(rootDir);
+        synchronized (fileCounter) {
+            if (!fs.exists(rootPath)) {
+                fs.mkdirs(rootPath);
+                fileCounter.set(0);
+                logger.info(String.format("CREATE DIRECTORY - %s", rootDir));
+            }
+        }
+        int fileNumber = fileCounter.getAndIncrement();
+        fileName = String.format("%s/TWITTER_%s_%06d.gz", rootDir,hour,fileNumber);
+        Path path = new Path(fileName);
+        FSDataOutputStream fsdos = fs.create(path);
+        gzip = new GZIPOutputStream(fsdos);
+    }
+
+    protected void close() throws IOException {
+        if(gzip!= null) {
+            gzip.finish();
+            gzip.close();
+            logger.info(String.format("FILE %s is created",fileName));
+            fileName=null;
+        }
+        gzip = null;
+    }
+
+    @Override
+    public void run() {
+        try {
+            int count=0;
+            while (!done) {
+                try {
+                    String msg = queue.take();
+
+                    if (gzip == null) {
+                        open();
+                    }
+
+                    gzip.write(msg.getBytes("UTF-8"));
+                    count++;
+
+                    if (count == messageCount) {
+                        close();
+                        count=0;
+                    }
+                } catch (InterruptedException e) {
+                    logger.error("MSG TAKE FAIL", e);
+                }
+            }
+            close();
+        } catch (IOException e) {
+            logger.error("FILE IO FAIL", e);
+        }
+        logger.info(String.format("BACKUP CONSUMER (%d) is done",getId()));
+    }
+
+    public void shutdown() throws InterruptedException {
+        done=true;
+        this.join();
+    }
+}
