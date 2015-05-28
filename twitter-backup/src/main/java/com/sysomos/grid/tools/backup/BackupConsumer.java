@@ -5,6 +5,7 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.log4j.Logger;
+import scala.util.parsing.combinator.testing.Str;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ public class BackupConsumer extends Thread {
     protected static Logger logger = Logger.getLogger(BackupConsumer.class);
 
     public final static String BACKUP_DIR_KEY = "backup.dir";
+    public final static String BACKUP_FILE_PREFIX = "backup.file.prefix";
     public final static String HADOOP_CONF_DIR = "hadoop.conf.dir";
     public final static String BACKUP_MESSAGE_PER_FILE = "backup.file.message.count";
 
@@ -33,6 +35,7 @@ public class BackupConsumer extends Thread {
     private static AtomicInteger fileCounter = new AtomicInteger(0);
     private final int messageCount;
     private String fileName;
+    private final String filePrefix;
 
     public BackupConsumer(final ArrayBlockingQueue<String> queue, final Properties properties) throws IOException {
         this.queue = queue;
@@ -44,6 +47,7 @@ public class BackupConsumer extends Thread {
         fs = FileSystem.get(configuration);
         done = false;
         messageCount = Integer.valueOf(properties.getProperty(BACKUP_MESSAGE_PER_FILE,"100000"));
+        filePrefix=properties.getProperty(BACKUP_FILE_PREFIX,"BACKUP");
     }
 
 
