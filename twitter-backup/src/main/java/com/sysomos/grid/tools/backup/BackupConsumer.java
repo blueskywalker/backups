@@ -1,9 +1,7 @@
 package com.sysomos.grid.tools.backup;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataOutputStream;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.*;
 import org.apache.log4j.Logger;
 import scala.util.parsing.combinator.testing.Str;
 
@@ -11,6 +9,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+import java.util.TimeZone;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPOutputStream;
@@ -53,6 +52,7 @@ public class BackupConsumer extends Thread {
 
     protected void open() throws IOException {
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHH");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
         long currentTime = System.currentTimeMillis();
         String hour = format.format(new Date(currentTime));
         String rootDir = String.format("%s/%s", properties.getProperty(BACKUP_DIR_KEY, "/backup"), hour);
@@ -63,10 +63,28 @@ public class BackupConsumer extends Thread {
                 fs.mkdirs(rootPath);
                 fileCounter.set(0);
                 logger.info(String.format("CREATE DIRECTORY - %s", rootDir));
+            } else {
+                RemoteIterator<LocatedFileStatus> iter = fs.listFiles(rootPath, false);
+                int max=0;
+                while(iter.hasNext()) {
+                    LocatedFileStatus s = iter.next();
+                    if(s.isFile()) {
+                        String [] fileParts = s.getPath().getName().split("[_\\.]");
+                        if(fileParts.length == 4) {
+                            try {
+                                max = Math.max(max,Integer.valueOf(fileParts[2]));
+                            } catch (Exception e) {
+                                ;
+                            }
+                        }
+                    }
+                }
+                fileCounter.set(max+1);
             }
         }
+
         int fileNumber = fileCounter.getAndIncrement();
-        fileName = String.format("%s/TWITTER_%s_%06d.gz", rootDir,hour,fileNumber);
+        fileName = String.format("%s/%s_%s_%06d.gz", rootDir,filePrefix,hour,fileNumber);
         Path path = new Path(fileName);
         FSDataOutputStream fsdos = fs.create(path);
         gzip = new GZIPOutputStream(fsdos);
@@ -74,6 +92,7 @@ public class BackupConsumer extends Thread {
 
     protected void close() throws IOException {
         if(gzip!= null) {
+            logger.info("gzip is closing....");
             gzip.finish();
             gzip.close();
             logger.info(String.format("FILE %s is created",fileName));
@@ -86,9 +105,10 @@ public class BackupConsumer extends Thread {
     public void run() {
         try {
             int count=0;
+            String msg=null;
             while (!done) {
                 try {
-                    String msg = queue.take();
+                    msg = queue.take();
 
                     if (gzip == null) {
                         open();
@@ -105,6 +125,12 @@ public class BackupConsumer extends Thread {
                     logger.error("MSG TAKE FAIL", e);
                 }
             }
+
+            // flush all queue
+            while((msg=queue.poll())!=null) {
+                gzip.write(msg.getBytes("UTF-8"));
+            }
+
             close();
         } catch (IOException e) {
             logger.error("FILE IO FAIL", e);

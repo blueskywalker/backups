@@ -17,6 +17,7 @@ public class BackupProducer implements Runnable {
     final Properties properties;
     final ArrayBlockingQueue<String> queue;
 
+
     public BackupProducer(int id, KafkaStream<byte[], byte[]> stream, final ArrayBlockingQueue<String> queue, Properties properties) {
         this.id = id;
         this.stream = stream;

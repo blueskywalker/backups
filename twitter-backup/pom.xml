@@ -32,6 +32,7 @@
         <version>2.5.0-cdh5.3.3</version>
         <scope>compile</scope>
     </dependency>
+
 </dependencies>
 
 <build>

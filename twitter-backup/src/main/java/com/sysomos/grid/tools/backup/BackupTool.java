@@ -108,6 +108,10 @@ public class BackupTool implements Runnable {
 
     public void shutdown() {
         logger.info("Shutdown start");
+
+        consumer.shutdown();
+        join();
+
         for(BackupConsumer c : consumerGroup) {
             try {
                 c.shutdown();
@@ -115,8 +119,6 @@ public class BackupTool implements Runnable {
                 logger.error(String.format("Consumer (%d) is Failed",c.getId()),e);
             }
         }
-
-        consumer.shutdown();
         executor.shutdown();
 
         logger.info("shutdown done");
