@@ -21,32 +21,27 @@ public class BackupConsumer extends Thread {
 
     protected static Logger logger = Logger.getLogger(BackupConsumer.class);
 
-    public final static String BACKUP_DIR_KEY = "backup.dir";
-    public final static String BACKUP_FILE_PREFIX = "backup.file.prefix";
-    public final static String HADOOP_CONF_DIR = "hadoop.conf.dir";
     public final static String BACKUP_MESSAGE_PER_FILE = "backup.file.message.count";
+    public final static String BACKUP_FILE_PREFIX = "backup.file.prefix";
+    public final static String BACKUP_DIR_KEY = "backup.dir";
 
     private final ArrayBlockingQueue<String> queue;
     private final Properties properties;
     private final FileSystem fs;
-    private boolean done;
     private GZIPOutputStream gzip;
     private static AtomicInteger fileCounter = new AtomicInteger(0);
     private final int messageCount;
     private String fileName;
     private final String filePrefix;
+    boolean done;
 
-    public BackupConsumer(final ArrayBlockingQueue<String> queue, final Properties properties) throws IOException {
-        this.queue = queue;
-        this.properties = properties;
-        Configuration configuration = new Configuration();
-        String baseDir = properties.getProperty(HADOOP_CONF_DIR, "/etc/hadoop/conf");
-        configuration.addResource(new Path(String.format("%s/core-site.xml", baseDir)));
-        configuration.addResource(new Path(String.format("%s/hdfs-site.xml", baseDir)));
-        fs = FileSystem.get(configuration);
-        done = false;
-        messageCount = Integer.valueOf(properties.getProperty(BACKUP_MESSAGE_PER_FILE,"100000"));
-        filePrefix=properties.getProperty(BACKUP_FILE_PREFIX,"BACKUP");
+    public BackupConsumer(final BackupTool tool) throws IOException {
+        this.queue = tool.getQueue();
+        this.properties = tool.getProperties();
+        this.fs = tool.getFs();
+        messageCount = Integer.valueOf(properties.getProperty(BACKUP_MESSAGE_PER_FILE, "100000"));
+        filePrefix = properties.getProperty(BACKUP_FILE_PREFIX, "BACKUP");
+        done=false;
     }
 
 
@@ -65,81 +60,86 @@ public class BackupConsumer extends Thread {
                 logger.info(String.format("CREATE DIRECTORY - %s", rootDir));
             } else {
                 RemoteIterator<LocatedFileStatus> iter = fs.listFiles(rootPath, false);
-                int max=0;
-                while(iter.hasNext()) {
+                int max = 0;
+                while (iter.hasNext()) {
                     LocatedFileStatus s = iter.next();
-                    if(s.isFile()) {
-                        String [] fileParts = s.getPath().getName().split("[_\\.]");
-                        if(fileParts.length == 4) {
+                    if (s.isFile()) {
+                        String[] fileParts = s.getPath().getName().split("[_\\.]");
+                        if (fileParts.length == 4) {
                             try {
-                                max = Math.max(max,Integer.valueOf(fileParts[2]));
+                                max = Math.max(max, Integer.valueOf(fileParts[2]));
                             } catch (Exception e) {
                                 ;
                             }
                         }
                     }
                 }
-                fileCounter.set(max+1);
+                fileCounter.set(max + 1);
             }
         }
 
         int fileNumber = fileCounter.getAndIncrement();
-        fileName = String.format("%s/%s_%s_%06d.gz", rootDir,filePrefix,hour,fileNumber);
+        fileName = String.format("%s/%s_%s_%06d.gz", rootDir, filePrefix, hour, fileNumber);
         Path path = new Path(fileName);
         FSDataOutputStream fsdos = fs.create(path);
         gzip = new GZIPOutputStream(fsdos);
     }
 
-    protected void close() throws IOException {
-        if(gzip!= null) {
+    protected void close() {
+        if (gzip != null) {
+
             logger.info("gzip is closing....");
-            gzip.finish();
-            gzip.close();
-            logger.info(String.format("FILE %s is created",fileName));
-            fileName=null;
+            try {
+                gzip.finish();
+                gzip.close();
+            } catch (IOException e) {
+                logger.error("GZIP",e);
+            }
+            logger.info(String.format("FILE %s is closed", fileName));
+
         }
+        fileName = null;
         gzip = null;
     }
 
     @Override
     public void run() {
+        logger.info(String.format("BACKUP CONSUMER (%d) has started", getId()));
+
+        int count = 0;
+        String msg = null;
         try {
-            int count=0;
-            String msg=null;
             while (!done) {
-                try {
-                    msg = queue.take();
+                msg = queue.take();
 
-                    if (gzip == null) {
-                        open();
-                    }
+                if (gzip == null) {
+                    open();
+                }
 
-                    gzip.write(msg.getBytes("UTF-8"));
-                    count++;
+                gzip.write(msg.getBytes("UTF-8"));
+                count++;
 
-                    if (count == messageCount) {
-                        close();
-                        count=0;
-                    }
-                } catch (InterruptedException e) {
-                    logger.error("MSG TAKE FAIL", e);
+                if (count == messageCount) {
+                    close();
+                    count = 0;
                 }
             }
+            logger.info("RECEIVE DONE MESSAGE");
 
-            // flush all queue
             while((msg=queue.poll())!=null) {
                 gzip.write(msg.getBytes("UTF-8"));
             }
 
+        } catch (Exception e) {
+            logger.error("EXIT FROM LOOP", e);
+        } finally {
             close();
-        } catch (IOException e) {
-            logger.error("FILE IO FAIL", e);
         }
-        logger.info(String.format("BACKUP CONSUMER (%d) is done",getId()));
+
+        logger.info(String.format("BACKUP CONSUMER (%d) is done", getId()));
     }
 
-    public void shutdown() throws InterruptedException {
-        done=true;
-        this.join();
+    public void setDone() {
+        this.done = true;
     }
 }

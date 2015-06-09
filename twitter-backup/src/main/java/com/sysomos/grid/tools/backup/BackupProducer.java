@@ -10,34 +10,35 @@ import java.util.concurrent.ArrayBlockingQueue;
 /**
  * Created by kkim on 5/22/15.
  */
-public class BackupProducer implements Runnable {
+public class BackupProducer extends Thread {
     public static Logger logger = Logger.getLogger(BackupProducer.class);
-    final int id;
+
     final KafkaStream<byte[], byte[]> stream;
     final Properties properties;
     final ArrayBlockingQueue<String> queue;
 
-
-    public BackupProducer(int id, KafkaStream<byte[], byte[]> stream, final ArrayBlockingQueue<String> queue, Properties properties) {
-        this.id = id;
+    public BackupProducer(final KafkaStream<byte[], byte[]> stream,final BackupTool tool) {
         this.stream = stream;
-        this.queue=queue;
-        this.properties = properties;
+        this.queue = tool.getQueue();
+        this.properties = tool.getProperties();
     }
 
+    @Override
     public void run() {
 
         ConsumerIterator<byte[], byte[]> iterator = stream.iterator();
 
-        while (iterator != null && iterator.hasNext()) {
-            try {
-                queue.put(new String(iterator.next().message()));
-            } catch (InterruptedException e) {
-                logger.error("QUEUE PUT FAIL",e);
+        synchronized (this) {
+            while (iterator != null && iterator.hasNext()) {
+                try {
+                    queue.put(new String(iterator.next().message()));
+                } catch (InterruptedException e) {
+                    logger.error("QUEUE PUT FAIL", e);
+                }
             }
         }
 
-        logger.info(String.format("JOB(%d) is done.", id));
+        logger.info(String.format("Producer (%d) is done.", getId()));
     }
 
 }
