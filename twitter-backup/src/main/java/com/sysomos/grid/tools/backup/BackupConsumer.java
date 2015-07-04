@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.TimeZone;
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPOutputStream;
 
@@ -25,7 +26,7 @@ public class BackupConsumer extends Thread {
     public final static String BACKUP_FILE_PREFIX = "backup.file.prefix";
     public final static String BACKUP_DIR_KEY = "backup.dir";
 
-    private final ArrayBlockingQueue<String> queue;
+    private final BlockingQueue<String> queue;
     private final Properties properties;
     private final FileSystem fs;
     private GZIPOutputStream gzip;
@@ -93,7 +94,7 @@ public class BackupConsumer extends Thread {
                 gzip.finish();
                 gzip.close();
             } catch (IOException e) {
-                logger.error("GZIP",e);
+                logger.error(e,e);
             }
             logger.info(String.format("FILE %s is closed", fileName));
 
@@ -102,12 +103,17 @@ public class BackupConsumer extends Thread {
         gzip = null;
     }
 
+    String addNewLine(String json) {
+        return json + "\n";
+    }
+
     @Override
     public void run() {
         logger.info(String.format("BACKUP CONSUMER (%d) has started", getId()));
 
         int count = 0;
-        String msg = null;
+
+        String msg;
         try {
             while (!done) {
                 msg = queue.take();
@@ -116,7 +122,7 @@ public class BackupConsumer extends Thread {
                     open();
                 }
 
-                gzip.write(msg.getBytes("UTF-8"));
+                gzip.write(addNewLine(msg).getBytes("UTF-8"));
                 count++;
 
                 if (count == messageCount) {
@@ -127,7 +133,7 @@ public class BackupConsumer extends Thread {
             logger.info("RECEIVE DONE MESSAGE");
 
             while((msg=queue.poll())!=null) {
-                gzip.write(msg.getBytes("UTF-8"));
+                gzip.write(addNewLine(msg).getBytes("UTF-8"));
             }
 
         } catch (Exception e) {

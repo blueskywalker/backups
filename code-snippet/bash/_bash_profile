@@ -76,6 +76,20 @@ function locale {
     export LC_ALL=en_US.UTF-8
 }
 
+####
+# maven
+#
+function maven_opts {
+    export MAVEN_OPTS=-Dmaven.artifact.threads=3
+}
+
+####
+# pythonrc
+#
+function pythonrc {
+    export PYTHONSTARTUP=$HOME/.pythonrc.py
+}
+
 #########
 #
 #  all settings
@@ -88,5 +102,7 @@ prompt_powerline
 gopath
 source_alias
 locale
+maven_opts
+pythonrc
 
 ### Added by the Heroku Toolbelt

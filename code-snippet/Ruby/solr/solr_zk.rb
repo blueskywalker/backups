@@ -22,7 +22,7 @@ ZK_BACKUP='bkzk34058:2181,bkzk34047:2181,bkzk34063:2181,dsadtt03:2181,dsadtt04:2
 TEST_SOLR='solrzktst01:2181,solrzktst02:2181,solrzktst03:2181'
 
 class CommandOption
-  @@commands=[ :lives, :status, :aliases, :collection, :get ,:ls, :put, :push_key, :service, :query, :fetch ]
+  @@commands=[ :lives, :status, :aliases, :collection, :get ,:ls, :put, :push_key, :service, :query, :fetch , :shard]
   @@clusters={ :dev => ZK_DEV, :staging => ZK_STAGING, :prod => ZK_PROD, :backup => ZK_BACKUP , :testing => TEST_SOLR}
   @@options = {}
 
@@ -151,7 +151,8 @@ end
 # fields
 #
 class SysomosAPI
-  attr_accessor :path, :query ,:startDate,:endDate,:dataSrcs,:fq,:startRow,:rows,:sortBy,:sortDir,:fields
+  attr_accessor :path, :query ,:startDate,:endDate,:dataSrcs,:fq,:startRow,:rows,:sortBy,:sortDir,:fields, :facetType
+  attr_accessor :facetField,:facetQuery,:start,:endd,:gap
 
   def get_data_source        
     if self.dataSrcs == nil or self.dataSrcs.strip == "" then
@@ -220,9 +221,10 @@ class SysomosAPI
                  :start => startRow==nil ? 0 : startRow,
                  :rows => rows == nil  ? 0 : rows,
                  :fl => [ :id , :createDate, :score ], 
-                 :fq => fq == nil ? [] : fq.split('|'), 
-                 :sort => sort_by 
+                 :sort => sort_by,
+                 :fq => fq == nil ? [] : fq.split('|') 
       }
+      params[:fq] <<  "createDate:[ #{startDate.to_i / 1000} TO #{endDate.to_i / 1000} ]"
 
       date_filter="createDate:[ #{startDate.to_i / 1000} TO #{endDate.to_i / 1000} ]"
       params[:fq] << date_filter
@@ -238,6 +240,20 @@ class SysomosAPI
                  'f.createDate.facet.range.gap' => '86400',
                  :fq => "createDate:[ #{startDate.to_i / 1000} TO #{endDate.to_i / 1000} ]"
       }
+    elsif path == '/api/rest/v1/posts/facet' then
+      params = { :q => qry,
+                 :rows => 0,
+                 :facet => 'on',
+                 'facet.field' => facetField,
+                 :fq => "createDate:[ #{startDate.to_i / 1000} TO #{endDate.to_i / 1000} ]"
+
+      }
+      if facetType != 'field' then
+        params["facet.#{facetType}"] = facetField
+        params["f.#{facetField}.#{facetType}.start"] = start
+        params["f.#{facetField}.#{facetType}.end"] = endd
+        params["f.#{facetField}.#{facetType}.gap"] = gap
+      end
     end
 
     params
@@ -247,7 +263,11 @@ class SysomosAPI
     ret = self.new
     ret.path = path
     CGI.parse(query).each do |k,v|
-      ret.send("#{k}=",v[0])
+      if k == 'end' then
+        ret.endd = v[0]
+      else
+        ret.send("#{k}=",v[0])
+      end
     end
     ret
   end
@@ -284,7 +304,7 @@ class SolrNode
   end 
 
   def self.from_zk(node)
-    host_name, port_number, base_url = node.split(/:_/)
+    host_name, port_number, base_url = node.split(/[:_]/)
     SolrNode.new(host_name,port_number,base_url)
   end
 
@@ -324,12 +344,13 @@ class SolrAdmin < SolrNode
     cmd['wt']='json' if not cmd.has_key?('wt')
     cmd['indent']='true' if not cmd.has_key?('indent')
     begin
+      puts "#{host}/#{cmd.to_param}"
       response = RestClient.get(host, {:params => cmd })
       puts cmd
       puts response.code
       puts response
     rescue => e
-      puts e.response
+      puts e
     end
   end
 
@@ -342,7 +363,7 @@ class SolrAdmin < SolrNode
 
   def self.from_lives(lives)
     node = lives[rand(lives.size)]
-    host,port,base = node.split(/_:/)
+    host,port,base = node.split(/[_:]/)
     SolrAdmin.new(host,port,base)
   end
 end
@@ -522,6 +543,23 @@ class ExecuteCommand
     end 
   end
 
+  def shard(args)
+    begin 
+      status=solr.status
+      status.keys.sort.each do |key|
+        shards=status[key]['shards']
+        sort_shard=shards.keys.sort_by { |s| [s[5..-1].to_i] }
+        sort_shard.each do |k|
+          puts "#{key} #{k} #{shards[k]['state']}"
+        end
+        puts '---'
+      end
+
+    rescue ArgumentError => e
+      puts e
+    end 
+
+  end
   def collection_create(args)
     admin = SolrAdmin.from_lives(solr.lives)
     if args.size > 0 then
@@ -581,7 +619,7 @@ class ExecuteCommand
       if solr.collections.include? collection
          stat=JSON.parse(solr.stat(collection))
          node=stat[collection]['shards']['shard1']['replicas']['core_node1']['node_name']
-         host,port,base = node.split(/_:/)
+         host,port,base = node.split(/[_:]/)
          admin = SolrAdmin.new(host,port,base)
          admin.delete collection, args[1]
       end

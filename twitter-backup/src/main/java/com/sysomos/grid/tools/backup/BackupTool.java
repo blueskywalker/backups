@@ -10,10 +10,7 @@ import org.apache.log4j.Logger;
 
 import java.io.*;
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 /************
  * * * *
@@ -38,7 +35,7 @@ public class BackupTool implements Runnable {
     private final int threadCount;
     private final String topic;
     private final ConsumerConnector kafkaConsumer;
-    private final ArrayBlockingQueue<String> queue;
+    private final BlockingQueue<String> queue;
     private final List<BackupProducer> producerGroup;
     private final List<BackupConsumer> consumerGroup;
     private final FileSystem fs;
@@ -69,8 +66,8 @@ public class BackupTool implements Runnable {
 
     public void run() {
 
-        logger.info("BackupTool is started");
 
+        logger.info("BackupTool is started");
         // setting
         Map<String, Integer> topicMap = new HashMap<String, Integer>();
         topicMap.put(topic, threadCount);
@@ -96,14 +93,16 @@ public class BackupTool implements Runnable {
             logger.error("FILE IO ERROR", e);
         }
 
-        synchronized (this) {
-            while (!done) {
-                try {
-                    this.wait();
-                } catch (InterruptedException e) {
-                    logger.error("INTERRUPTED", e);
+
+        while (!done) {
+            try {
+                synchronized (this) {
+                    wait();
                 }
+            } catch (InterruptedException e) {
+                logger.error("INTERRUPTED", e);
             }
+
         }
 
         logger.info("BackupTool is done");
@@ -132,7 +131,7 @@ public class BackupTool implements Runnable {
             logger.info("FILESYSTEM CLOSE");
             fs.close();
 
-            done=true;
+            done = true;
             synchronized (this) {
                 notify();
             }
@@ -145,7 +144,7 @@ public class BackupTool implements Runnable {
         return properties;
     }
 
-    public ArrayBlockingQueue<String> getQueue() {
+    public BlockingQueue<String> getQueue() {
         return queue;
     }
 
