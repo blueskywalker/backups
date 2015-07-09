@@ -9,6 +9,9 @@ require 'optparse'
 require 'uri'
 require "curb"
 require 'time_difference'
+require 'concurrent'
+require 'thread'
+require 'time'
 #require 'pp'
 
 $VERSION=0.01
@@ -17,12 +20,12 @@ ZK_DEV='sjkf01:2181,sjkf02:2181,sjkf03:2181'
 ZK_STAGING='rtzk01:2181,rtzk02:2181,rtzk03:2181'
 #ZK_PROD='srzk34032:2181,srzk34050:2181,srzk34066:2181,srzk35032:2181,srzk35073:2181,srzk35080:2181,srzk35081:2181,srzk35088:2181,srzk35092:2181'
 ZK_PROD='srzk01:2181,srzk02:2181,srzk03:2181'
-#ZK_BACKUP='bkzk34058:2181,bkzk34047:2181,bkzk34063:2181'
-ZK_BACKUP='bkzk34058:2181,bkzk34047:2181,bkzk34063:2181,dsadtt03:2181,dsadtt04:2181'
+ZK_BACKUP='solrzktst01:2181,solrzktst02:2181,solrzktst03:2181'
+#ZK_BACKUP='bkzk34058:2181,bkzk34047:2181,bkzk34063:2181,dsadtt03:2181,dsadtt04:2181'
 TEST_SOLR='solrzktst01:2181,solrzktst02:2181,solrzktst03:2181'
 
 class CommandOption
-  @@commands=[ :lives, :status, :aliases, :collection, :get ,:ls, :put, :push_key, :service, :query, :fetch , :shard]
+  @@commands=[ :lives, :status, :aliases, :collection, :get ,:ls, :put, :push_key, :service, :query, :fetch , :shard, :index]
   @@clusters={ :dev => ZK_DEV, :staging => ZK_STAGING, :prod => ZK_PROD, :backup => ZK_BACKUP , :testing => TEST_SOLR}
   @@options = {}
 
@@ -368,6 +371,41 @@ class SolrAdmin < SolrNode
   end
 end
 
+
+class FutureGroup
+
+  def initialize
+    @group = []
+  end
+
+  def submit(&block)
+    @group << Concurrent::Future.execute( &block )
+  end
+
+  def join
+    all_done=false
+    return @group.size() if @group.size() == 0
+    while !all_done do
+        @group.each_with_index do |f,i|
+          break if f.state != :fulfilled
+          all_done=true if i == (@group.length()-1)
+        end
+        sleep 1 if !all_done
+    end
+    return @group.size()
+  end
+
+  def results(&block)
+    if block_given? then
+      @group.each { |r|
+        block.call(r.value)
+      }
+    end
+  end
+
+end
+
+
 def mprocess(nodes)
   if nodes.size == 0 then
     puts "there is no nodes"
@@ -550,16 +588,43 @@ class ExecuteCommand
         shards=status[key]['shards']
         sort_shard=shards.keys.sort_by { |s| [s[5..-1].to_i] }
         sort_shard.each do |k|
-          puts "#{key} #{k} #{shards[k]['state']}"
+          puts "#{key} #{k} #{shards[k]['state']}  #{shards[k]['range']}"
         end
         puts '---'
       end
 
-    rescue ArgumentError => e
+    rescue  => e
       puts e
     end 
 
   end
+  
+  def getUrl(url) 
+  	begin
+  		response=`curl -s "#{URI.escape(url)}"`
+  	rescue => e
+  		puts e
+  	end
+  	response
+  end
+  
+  def index(args)
+  	begin
+  		nodes=solr.lives
+  		status=solr.status
+  		solr.collections.each do |c|  			 			 			
+  			shards=status[c]['shards']  			
+  			random=Random.rand(shards.keys.size)
+  			shard="shard#{random+1}"
+  			core, values=shards[shard]['replicas'].first  			
+  			url = "#{values['base_url']}/#{values['core']}/select?q=*:*&wt=json&rows=0"
+			puts "#{Time.now.utc.to_i } | #{c} | #{getUrl(url)}"
+  		end
+  	rescue => e
+  		puts e 
+  	end	
+  end
+  
   def collection_create(args)
     admin = SolrAdmin.from_lives(solr.lives)
     if args.size > 0 then
