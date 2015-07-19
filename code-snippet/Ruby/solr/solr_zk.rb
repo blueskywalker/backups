@@ -724,7 +724,9 @@ class ExecuteCommand
       else
         puts "it is not fixed. skip #{args[0]}"
       end
-  end
+    else
+      puts "needs [fixed] [good collection]"
+    end
  end
 
   def delete(args)
