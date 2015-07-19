@@ -12,6 +12,7 @@ require 'time_difference'
 require 'concurrent'
 require 'thread'
 require 'time'
+require 'tempfile'
 #require 'pp'
 
 $VERSION=0.01
@@ -74,6 +75,7 @@ class CommandOption
   def self.command
     return @@options[:command] 
   end
+
 end
 
 class SolrCloud
@@ -91,11 +93,15 @@ class SolrCloud
   end
 
   def aliases
-    JSON.parse(@zookeeper.get(:path => "#{@solr_root}/aliases.json")[:data])["collection"]
+    JSON.parse(get("#{@solr_root}/aliases.json"))["collection"]
   end
 
   def status
-    JSON.parse(@zookeeper.get(:path => "#{@solr_root}/clusterstate.json")[:data])
+    JSON.parse(get("#{@solr_root}/clusterstate.json"))
+  end
+
+  def clusterstate
+    get("#{@solr_root}/clusterstate.json")
   end
 
   def stat(collection)
@@ -440,12 +446,12 @@ def mprocess(nodes)
 end
 
 class ExecuteCommand
-  @@LIVE_NODE_STORE ="/tmp/solr_#{CommandOption.cluster}_lives.txt"
 
   attr_reader :solr
 
   def initialize(zkhost,base='/solr')
     @solr=SolrCloud.new(zkhost,base)
+    @@LIVE_NODE_STORE ="/tmp/solr_#{CommandOption.cluster}_lives.txt"
   end
 
   def lives(args)
@@ -458,7 +464,7 @@ class ExecuteCommand
   end
 
   def status(args)
-    puts solr.status.to_json
+    puts solr.clusterstate
   end
 
   def collection(args)
@@ -472,6 +478,8 @@ class ExecuteCommand
          self.collection_reload args[1..-1]
        when 'delete'
          self.collection_delete args[1..-1]
+      when 'range'
+        self.collection_range_fix args[1..-1]
        else
          puts "wrong command please check command"
        end
@@ -487,7 +495,7 @@ class ExecuteCommand
 
   def ls(args)
     if args.size == 0 then
-      puts "need apth"
+      puts "need path"
     else
       puts solr.ls args[0]
     end
@@ -513,8 +521,11 @@ class ExecuteCommand
     if args.size == 0 then
       puts "need (status,start,stop,restart)"
     else
+      if not File.exists?(@@LIVE_NODE_STORE) then
+        lives(args)
+      end
       if args[0] == "start" then
-        mprocess(File.readlines(LIVE_NODE_STORE)) do |node|
+        mprocess(File.readlines(@@LIVE_NODE_STORE)) do |node|
           SolrNode.from_zk(node).service args[0]
         end
       else
@@ -588,9 +599,10 @@ class ExecuteCommand
         shards=status[key]['shards']
         sort_shard=shards.keys.sort_by { |s| [s[5..-1].to_i] }
         sort_shard.each do |k|
-          puts "#{key} #{k} #{shards[k]['state']}  #{shards[k]['range']}"
+          shards[k]['replicas'].each do |r|
+              puts "#{key}\t#{k}\t#{shards[k]['range']}\t#{r.first}\t#{r.second['state']}\t#{r.second['node_name']}"
+          end
         end
-        puts '---'
       end
 
     rescue  => e
@@ -677,6 +689,43 @@ class ExecuteCommand
       end
     end
   end
+
+  def collection_range_fix(args)
+    if args.length > 1 then
+      status=solr.status
+      fix_coll=status[args[0]]
+      good_coll=status[args[1]]
+      if fix_coll['shards'].size != good_coll['shards'].size then
+        puts "NO.shards is not the same #{fix_coll['shards'].size} != #{good_coll['shards'].size}"
+        exit
+      end
+      missing=fix_coll['shards'].select { |k,v|  v['range'].nil? || v['range'].empty?  }
+      missing1=good_coll['shards'].select { |k,v|  v['range'].nil? || v['range'].empty?  }
+      if missing.length == 0  then
+        puts "There is no missing range"
+        exit
+      end
+      if missing1.length > 0 then
+        puts "Try it with another collection"
+        exit
+      end
+
+      missing.each { |k,v| status[args[0]]['shards'][k]['range']=good_coll['shards'][k]['range'] }
+
+      filename="/tmp/solr_#{CommandOption.cluster}_clusterstate.json"
+      File.open(filename,"w") do |f|
+        f.write(JSON.pretty_generate(status))
+      end 
+
+      print "are you sure to reload all collections? [y/N]"
+      case $stdin.gets.strip 
+      when 'Y','y'
+        self.send('put','/solr/clusterstate.json',filename)
+      else
+        puts "it is not fixed. skip #{args[0]}"
+      end
+  end
+ end
 
   def delete(args)
     if args.size > 1 then
