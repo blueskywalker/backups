@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Grid Solr Collection Status</title>
+    <!-- Load c3.css -->
+    <link href="../bower_components/c3/c3.css" rel="stylesheet" type="text/css">
+    <style>
+        .table td {
+            text-align: left;
+        }
+        
+        .table td + td {
+            text-align: right;
+            font-weight: bold;
+        }
+    </style>
+    <!-- Load d3.js and c3.js -->
+    <script src="../bower_components/d3/d3.min.js" charset="utf-8"></script>
+    <script src="../bower_components/c3/c3.min.js"></script>
+    <script>
+        var get_params = function (search_string) {
+
+            var parse = function (params, pairs) {
+                var pair = pairs[0];
+                var parts = pair.split('=');
+                var key = decodeURIComponent(parts[0]);
+                var value = decodeURIComponent(parts.slice(1).join('='));
+
+                // Handle multiple parameters of the same name
+                if (typeof params[key] === "undefined") {
+                    params[key] = value;
+                } else {
+                    params[key] = [].concat(params[key], value);
+                }
+
+                return pairs.length == 1 ? params : parse(params, pairs.slice(1))
+            }
+
+            // Get rid of leading ?
+            return search_string.length == 0 ? {} : parse({}, search_string.substr(1).split('&'));
+        }
+
+        var params = get_params(location.search);
+
+        function formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+        }
+    </script>
+</head>
+
+<body onload="get_data()">
+    <div id="title">
+        <H1>Sysomos Grid Data Status</H1>
+    </div>
+    <div id="total"></div>
+    <div id="chart" height="800" width="800">
+        </convas>
+        <script>
+            var pie_chart;
+            var data_set = {};
+
+            function chart_data(json_data) {
+                var data = JSON.parse(json_data);
+                var total_docs = 0;
+
+                //console.log(data);
+                for (c in data) {
+                    keys = c.split("_");
+                    if (keys[1] in data_set) {
+                        data_set[keys[1]][1] += parseInt(data[c].numfound);
+                    } else {
+                        data_set[keys[1]] = [keys[1], parseInt(data[c].numfound)];
+                    }
+                    total_docs += parseInt(data[c].numfound);
+                }
+
+                pie_chart = c3.generate({
+                    bindto: '#chart',
+                    data: {
+                        columns: [
+                            data_set['TT'],
+                            data_set['TB'],
+                            data_set['FB'],
+                            data_set['NW']
+                    ],
+                        type: 'pie'
+                    }
+                });
+                var total = document.getElementById("total");
+                total.innerHTML = "<TABLE class=\"table\"><TR><TD>Total Docs</TD><TD>" + formatNumber(total_docs) +
+                    "</TD></TR><TR><TD>Twitter</TD><TD>" + formatNumber(data_set['TT'][1]) + "</TD></TR><TR><TD>Tumblr</TD><TD>" + formatNumber(data_set['TB'][1]) + "</TD></TR><TR><TD>Facebook</TD><TD>" + formatNumber(data_set['FB'][1]) + "</TD></TR><TR><TD>News</TD><TD>" + formatNumber(data_set['NW'][1]) + "</TD></TR></TABLE>";
+            }
+
+            function get_data() {
+                var chartbox = document.getElementById("chart");
+                chartbox.width = window.innerWidth - 20;
+                chartbox.height = window.innerHeight - 50;
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                        chart_data(xmlhttp.responseText);
+                    }
+                }
+                var title = document.getElementById("title");
+                var url = "scripts/latest.php"
+                xmlhttp.open("GET", url, true);
+                xmlhttp.send();
+            }
+        </script>
+</body>
+
+</html>

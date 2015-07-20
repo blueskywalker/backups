@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script-->
+    <script src="../bower_components/spin.js/spin.min.js" type ="text/javascript"></script>
+
+    <style>
+         body {
+              font-family: Helvetica;
+              font-size:11pt;
+              padding:5px;
+              margin:0px
+            }
+        .centered {
+          text-align: center;
+        }
+
+        .spinner {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+        }
+    </style>
+
+
+</head>
+<body>
+    
+  <div id='spinner' class='spinner'></div>
+
+  <p class='centered'>
+   &nbsp; <br/> &nbsp; <br/>
+          <script type="text/javascript">
+
+        var spinner = null;
+        var spinner_div = document.getElementById("spinner");
+        
+
+
+        function start() {
+            if(spinner == null) {
+              spinner = new Spinner().spin(spinner_div);
+            } else {
+              spinner.spin(spinner_div);
+            }
+        }
+        function stop() {
+            spinner.stop(spinner_div);
+        }
+    </script>
+    <button  onclick="start()">START</button>
+    &nbsp;
+   <button  onclick="stop()" >STOP</button>
+   <br/>   
+ 
+</body>
+</html>

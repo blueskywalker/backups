@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Collection Indexing</title>
+    <!-- Load c3.css -->
+    <link href="../bower_components/c3/c3.css" rel="stylesheet" type="text/css">
+    <!-- Load d3.js and c3.js -->
+    <script src="../bower_components/d3/d3.min.js" charset="utf-8"></script>
+    <script src="../bower_components/c3/c3.min.js"></script>
+    <script>
+        function get_data() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    draw(xmlhttp.responseText);
+                }
+            }
+
+            var period = document.getElementById("duration");
+            var now = parseInt(new Date().getTime() / 1000);
+            var start = now - period.options[period.selectedIndex].value;
+
+            var src = document.getElementById("source");
+            var source = src.options[src.selectedIndex].value;
+            console.log(source);
+            var table = document.getElementById("table");
+            var month = table.options[table.selectedIndex].value;
+            console.log(month);
+            var url = "scripts/each_collection.php?src=post_" + source + "_" + month + "&start=" + start + "&end=" + now;
+
+            console.log(url);
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+        }
+
+        function sorteduniq(a) {
+            var result = [];
+            a.sort().forEach(function (item) {
+                if (result.indexOf(item) < 0) {
+                    result.push(item)
+                }
+            });
+            return result;
+        }
+
+        function fill_table() {
+            var selector = document.getElementById("source");
+            var tables = document.getElementById("table");
+            var value = selector.options[selector.selectedIndex].value;
+            var table = sorteduniq(table_group[value]).reverse();
+            for (i = 0; i < table.length; i++) {
+                var option = document.createElement("option");
+                option.value = table[i];
+                option.text = table[i];
+                tables.appendChild(option);
+            }
+        }
+
+        function changeSource() {
+            var tables = document.getElementById("table");
+            while (tables.hasChildNodes()) {
+                tables.removeChild(tables.childNodes[0]);
+            }
+            fill_table();
+        }
+        var table_group = {};
+
+        function get_tables() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var json = JSON.parse(xmlhttp.responseText);
+                    var tables = json['collections'];
+                    for (i = 0; i < tables.length; i++) {
+                        if (tables[i].indexOf("post") != 0)
+                            continue;
+
+                        var splited = tables[i].split("_");
+                        if (splited[1] in table_group) {
+                            table_group[splited[1]].push(splited[2]);
+                        } else {
+                            table_group[splited[1]] = [splited[2]];
+                        }
+                    }
+                    var source = document.getElementById("source");
+                    for (s in table_group) {
+                        var option = document.createElement("option");
+                        option.value = s;
+                        option.text = s;
+                        source.appendChild(option);
+                    }
+                    fill_table();
+                }
+            }
+            xmlhttp.open("GET", "scripts/tables.php", true);
+            xmlhttp.send();
+        }
+    </script>
+</head>
+
+<body onload="get_tables()">
+    <div>
+        <H2>Sysomos Grid Indexing</H2>
+    </div>
+    <br/>
+    <div id="choose">
+        <select id="source" onchange="changeSource()"></select>
+        <select id="table"></select>
+        <select id="duration" onchange="">
+            <option value="3600">an hour</option>
+            <option value="43200">haf day</option>
+            <option value="86400">a day</option>
+            <option value="604800">a week</option>
+            <option value="2592000">a month</option>
+            <option value="7948800">a quater of year</option>
+            <option value="15552000">half year</option>
+            <option value="34560000">all</option>
+        </select>
+        <button id="draw" onclick="get_data()">Draw</button>
+    </div>
+    <div id="perf"></div>
+    <div id="size"></div>
+    <div id="chart"></div>
+    <script>
+        var chart;
+        var formats = ['%H:%M:%S', '%H:%M:%S', '%H:%M:%S', '%Y-%m-%d', '%Y-%m-%d', '%Y-%m', '%Y-%m', '%Y-%m'];
+
+        function draw(data) {
+            var index_data = JSON.parse(data);
+            var label = ['x'];
+            var value = ['docs'];
+
+            index_data.forEach(function (entry) {
+                label.push(entry['date']);
+                value.push(entry['count']);
+            });
+            var timediff = label[label.length - 1] - label[1];
+            var docdiff = value[value.length - 1] - value[1];
+            var rate = docdiff / parseInt(timediff / 1000);
+
+            var performance = document.getElementById("perf");
+            var size = document.getElementById("size");
+            performance.innerHTML = "<H3> Indexing : " + formatNumber(rate.toFixed(2)) + " / sec</H3>";
+            size.innerHTML = "<H3> Current Index Size : " + formatNumber(value[value.length - 1]) + "</H3>";
+            var duration = document.getElementById("duration");
+            var index = duration.selectedIndex;
+            chart = c3.generate({
+                bindto: '#chart',
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: formats[index]
+                        }
+                    }
+                },
+                data: {
+                    x: 'x',
+                    columns: [label, value]
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Grid Solr Collection Status</title>        
+        <script src="../bower_components/Chart.js/Chart.min.js"></script>
+        <script>
+            var get_params = function(search_string) {
+
+              var parse = function(params, pairs) {
+                var pair = pairs[0];
+                var parts = pair.split('=');
+                var key = decodeURIComponent(parts[0]);
+                var value = decodeURIComponent(parts.slice(1).join('='));
+
+                // Handle multiple parameters of the same name
+                if (typeof params[key] === "undefined") {
+                  params[key] = value;
+                } else {
+                  params[key] = [].concat(params[key], value);
+                }
+
+                return pairs.length == 1 ? params : parse(params, pairs.slice(1))
+              }
+
+              // Get rid of leading ?
+              return search_string.length == 0 ? {} : parse({}, search_string.substr(1).split('&'));
+            }
+
+            var params = get_params(location.search);
+
+            function formatNumber (num) {
+                return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+            }
+        </script>
+    </head>
+    <body onload="get_data()">
+        <div id="title"></div>
+        <div id="total"></div>
+        <canvas id="collection" height="600" width="800"></convas>
+        <script>
+            function chart_data(json_data) {
+                var data=JSON.parse(json_data);
+                var label_values = [];
+                var data_set = [];
+                var total_docs = 0;
+                
+                for ( c in data) {
+                    label_values.push(c);
+                    data_set.push(data[c].numfound)
+                    total_docs += parseInt(data[c].numfound)
+                }
+                var bardata = {
+                    labels : label_values,
+                    datasets : [ 
+                        { 
+                            fillColr : "#66A3A3", 
+                            stokeColor : "#48A4D1",
+                            data : data_set
+                        }
+                    ]
+                }
+                var colls = document.getElementById("collection").getContext("2d");
+                // draw bar chart
+                console.log(bardata)
+                new Chart(colls).Bar(bardata)     
+                var total = document.getElementById("total")
+                total.innerHTML="<H3>Total Docs :" + formatNumber(total_docs) + "</H3>" 
+            }
+            function get_data() {
+                var chartbox = document.getElementById("collection");
+                chartbox.width = window.innerWidth-20;
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange=function() {
+                    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+                        chart_data(xmlhttp.responseText);
+                    }
+                }
+                var title=document.getElementById("title");
+                var url = "scripts/latest.php"
+                if (params["src"]!=null) {
+                    url = url.concat("?src=".concat(params['src']))                   
+                    var source;
+                    switch(params["src"]) {
+                        case "TT": source="Twitter";break;
+                        case "TB": source="Tumblr";break;
+                        case "FB": source="Facebook";break;
+                        case "NW": source="News";break;
+                    }
+                    title.innerHTML="<H1> " +source+ "Index Size </H1>"; 
+                } else {
+                    title.innerHTML="<H1> Grid Index Size </H1>"; 
+                }
+                xmlhttp.open("GET",url,true);
+                xmlhttp.send();
+            }
+        </script>
+    </body>
+    
+</html>

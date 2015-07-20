@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sysomos Grid Index Monitoring</title>
+    <!-- Load c3.css -->
+    <link href="../bower_components/c3/c3.css" rel="stylesheet" type="text/css">
+    <!-- Load d3.js and c3.js -->
+    <script src="../bower_components/d3/d3.min.js" charset="utf-8"></script>
+    <script src="../bower_components/c3/c3.min.js"></script>
+    <script src="../bower_components/spin.js/spin.min.js" type="text/javascript"></script>
+    <style>
+        .table td {
+            text-align: left;
+        }
+        
+        .table td + td {
+            text-align: right;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        var timeout = setTimeout("location.reload(true);", 600000);
+    </script>
+    <script>
+        function get_data() {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    spinner.stop();
+                    draw(xmlhttp.responseText);
+                }
+            }
+
+            var period = document.getElementById("duration");
+            var total = document.getElementById("total");
+
+            var now = parseInt(new Date().getTime() / 1000);
+            var start = now - period.options[period.selectedIndex].value;
+
+            var url = "scripts/total.php?start=" + start + "&end=" + now;
+
+            console.log(url);
+            spinner.spin(spinner_div);
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+        }
+
+        function formatNumber(num) {
+            return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
+        }
+    </script>
+</head>
+
+<body onload="get_data()">
+    <div>
+        <H2>Sysomos Grid Indexing</H2>
+    </div>
+    <div id="period">
+        <select id="duration" onchange="get_data()">
+            <option value="3600">an hour</option>
+            <option value="10800">last 3 hours</option>
+            <option value="43200">haf day</option>
+            <option value="86400">a day</option>
+            <option value="604800">a week</option>
+            <option value="2592000">a month</option>
+            <option value="7948800">a quater of year</option>
+            <option value="15552000">half year</option>
+            <option value="34560000">all</option>
+        </select>
+        <a href="details.html">daily view</a>
+    </div>
+    <div id='spinner' class='spinner'></div>
+    <div id="info"></div>
+    <div id="chart"></div>
+    <div id="size_chart"></div>
+    <div id="kafka_chart"></div>
+    <script>
+        var spinner = new Spinner().spin(spinner_div);;
+        var spinner_div = document.getElementById("spinner");
+        var chart;
+        var chart_size;
+        var chart_kafka;
+        var formats = ['%H:%M:%S', '%H:%M:%S', '%H:%M:%S', '%H:%M:%S', '%Y-%m-%d', '%Y-%m-%d', '%Y-%m', '%Y-%m', '%Y-%m'];
+
+
+
+        function byteformat(bytes) {
+            var fmt = function (s) {
+                return formatNumber(s.toFixed(0));
+            }
+            if (bytes < 1024) {
+                return fmt(bytes) + ' B';
+            } else if (bytes < 1024 * 1024) {
+                return fmt(bytes / 1024) + ' kB';
+            } else if (bytes < 1024 * 1024 * 1024) {
+                return fmt(bytes / 1024 / 1024) + ' MB';
+            } else {
+                return fmt(bytes / 1024 / 1024 / 1024) + ' GB';
+            }
+        }
+
+        function draw(data) {
+            var dbdata = JSON.parse(data);
+            //console.log(dbdata);
+            var index_data = dbdata['docs'];
+
+            var label = ['x'];
+            var value = ['docs'];
+            var perf = ['perf'];
+            //console.log(index_data.length);
+            for (var i = 0; i < index_data.length; i++) {
+                label.push(index_data[i]['epoch'] * 1000);
+                value.push(index_data[i]['total']);
+                if (i == 0) {
+                    perf.push(0);
+                } else {
+                    var tdiff = index_data[i]['epoch'] - index_data[i - 1]['epoch'];
+                    var ddiff = index_data[i]['total'] - index_data[i - 1]['total'];
+                    var drate = ddiff / ((tdiff == 0) ? 1 : parseInt(tdiff));
+
+                    perf.push(drate.toFixed(2));
+                }
+            }
+
+            var duration = document.getElementById("duration");
+            var index = duration.selectedIndex;
+            chart = c3.generate({
+                bindto: '#chart',
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: formats[index]
+                        }
+                    },
+                    y: {
+                        label: 'NO. DOCS',
+                        tick: {
+                            format: formatNumber
+                        }
+                    },
+                    y2: {
+                        show: true,
+                        label: ' performance per second ',
+                        tick: {
+                            format: formatNumber
+                        }
+                    }
+                },
+                data: {
+                    x: 'x',
+                    columns: [label, value, perf],
+                    axes: {
+                        perf: 'y2'
+                    }
+                }
+            });
+
+            var timediff = label[label.length - 1] - label[1];
+
+            label = ['x'];
+            var osize = ['size'];
+            var hdfs = ['hdfs'];
+            dbdata['size'].forEach(function (entry) {
+                label.push(entry['epoch'] * 1000);
+                osize.push(entry['size']);
+                hdfs.push(entry['hdfs']);
+            });
+
+            chart_size = c3.generate({
+                bindto: '#size_chart',
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: formats[index]
+                        }
+                    },
+                    y: {
+                        label: 'Original Size',
+                        tick: {
+                            format: byteformat
+                        }
+                    },
+                    y2: {
+                        show: true,
+                        label: 'HDFS Size',
+                        tick: {
+                            format: byteformat
+                        }
+                    }
+                },
+                data: {
+                    x: 'x',
+                    columns: [label, osize, hdfs],
+                    axes: {
+                        hdfs: 'y2'
+                    }
+                }
+            });
+
+            label = ['x']
+            var logsize = ['logsize']
+            var offset = ['offset']
+            var lag = ['lag']
+
+            dbdata['post'].forEach(function (entry) {
+                label.push(entry['epoch'] * 1000);
+                logsize.push(entry['logsize']);
+                offset.push(entry['offset']);
+                lag.push(entry['lag']);
+            });
+
+            chart_kafka = c3.generate({
+                bindto: '#kafka_chart',
+                axis: {
+                    x: {
+                        type: 'timeseries',
+                        tick: {
+                            format: formats[index]
+                        }
+                    },
+                    y: {
+                        label: 'log size and offset',
+                        tick: {
+                            format: formatNumber
+                        }
+                    },
+                    y2: {
+                        show: true,
+                        label: 'lag',
+                        tick: {
+                            format: formatNumber
+                        }
+                    }
+                },
+                data: {
+                    x: 'x',
+                    columns: [label, logsize, offset, lag],
+                    axes: {
+                        lag: 'y2'
+                    }
+                }
+            });
+
+            var docdiff = value[value.length - 1] - value[1];
+            var rate = docdiff / parseInt(timediff / 1000);
+
+            var ktimediff = label[label.length - 1] - label[1];
+
+            var kafka_p_rate = (logsize[logsize.length - 1] - logsize[1]) / parseInt(ktimediff / 1000);
+            console.log(kafka_p_rate);
+            var kafka_c_rate = (offset[offset.length - 1] - offset[1]) / parseInt(ktimediff / 1000);
+            var info = document.getElementById("info");
+            info.innerHTML = "<TABLE  class=\"table\"><TR><TD>Current Index Size</TD><TD>" + formatNumber(value[value.length - 1]) + "</TD></TR><TR><TD>delta index docs</TD><TD>" + formatNumber(docdiff) + "</TD></TR><TR><TD>Indexing</TD><TD>" + formatNumber(rate.toFixed(2)) + "/sec</TD></TR><TR><TD>kafka produce</TD><TD>" + formatNumber(kafka_p_rate.toFixed(2)) + "/sec</TD></TR><TR><TD>kafka consume</TD><TD>" + formatNumber(kafka_c_rate.toFixed(2)) + "/sec</TD></TR></TABLE>";
+        }
+    </script>
+</body>
+
+</html>
