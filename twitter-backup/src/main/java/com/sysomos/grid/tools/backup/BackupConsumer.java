@@ -1,11 +1,14 @@
 package com.sysomos.grid.tools.backup;
 
+import com.sun.jersey.json.impl.BufferingInputOutputStream;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.log4j.Logger;
 import scala.util.parsing.combinator.testing.Str;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -29,7 +32,7 @@ public class BackupConsumer extends Thread {
     private final BlockingQueue<String> queue;
     private final Properties properties;
     private final FileSystem fs;
-    private GZIPOutputStream gzip;
+    private OutputStream gzip;
     private static AtomicInteger fileCounter = new AtomicInteger(0);
     private final int messageCount;
     private String fileName;
@@ -83,7 +86,7 @@ public class BackupConsumer extends Thread {
         fileName = String.format("%s/%s_%s_%06d.gz", rootDir, filePrefix, hour, fileNumber);
         Path path = new Path(fileName);
         FSDataOutputStream fsdos = fs.create(path);
-        gzip = new GZIPOutputStream(fsdos);
+        gzip = new BufferedOutputStream(new GZIPOutputStream(fsdos));
     }
 
     protected void close() {
@@ -91,7 +94,7 @@ public class BackupConsumer extends Thread {
 
             logger.info("gzip is closing....");
             try {
-                gzip.finish();
+                //gzip.finish();
                 gzip.close();
             } catch (IOException e) {
                 logger.error(e,e);

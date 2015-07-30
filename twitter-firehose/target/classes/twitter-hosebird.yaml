@@ -1,0 +1,46 @@
+
+endpoint: sample
+
+sample:
+    consumer.key: VGWiRGOdMu9Y3pcksiOdE3MEr
+    consumer.secret: EO1stDon9mO3476C5KfSMBSVTtCoKNvMnwmrrCKch8GyHxizr7
+    access.token: 2863371078-LIq50fdiV3oYhI3jN0bKmjvgYWPwUpuPODEkRat
+    access.secret: 7GqtnjuqJ3EQ21x7TemekIt0ZhrJvZe3LfEQTEhlxbz0a
+
+firehose:
+    consumer.key: VGWiRGOdMu9Y3pcksiOdE3MEr
+    consumer.secret: EO1stDon9mO3476C5KfSMBSVTtCoKNvMnwmrrCKch8GyHxizr7
+    access.token: 2863371078-LIq50fdiV3oYhI3jN0bKmjvgYWPwUpuPODEkRat
+    access.secret: 7GqtnjuqJ3EQ21x7TemekIt0ZhrJvZe3LfEQTEhlxbz0a
+
+enterprise:
+    user.name: a
+    user.password: b
+    account: c
+    label: d
+    product: e
+
+listener:
+     no.thread: 2
+     timeout: 5
+
+kafka:
+    topic: twitterStatus
+    producer.type: async
+    batch.num.messages: 2000
+    metadata.broker.list: rtkf01:9092,rtkf02:9092,rtkf03:9092,rtkf04:9092
+    compression.codec: 2
+
+backup:
+    output: /tmp/twitter
+    prefix: Twitter
+    no.thread: 2
+    max.line: 1000000
+
+zookeeper:
+    hosts: rtzk01:2181,rtzk02:2181,rtzk03:2181
+    path: /twitter/collector
+    timeout: 3000
+
+metrics:
+    file: /tmp/twitter-collector-stat.csv
