@@ -16,7 +16,7 @@ import org.blueskywalker.twitter.hosebird.YamlType;
  *
  * @author kkim
  */
-public abstract class ZKElectableClient implements Watcher, ZNodeDeletionMonitor.ZNodeDeletionMonitorListener {
+public abstract class ZKElectableClient implements Watcher, ZNodeMonitor.ZNodeMonitorListener {
 
     public static final Logger logger = Logger.getLogger(ZKElectableClient.class);
 
@@ -26,7 +26,7 @@ public abstract class ZKElectableClient implements Watcher, ZNodeDeletionMonitor
     private final String ELECTION_ZNODE_PATH;
     private final String SERVER_HOSTS;
     private final int TIMEOUT;
-    ZNodeDeletionMonitor zNodeDeletionMonitor;
+    ZNodeMonitor zNodeMonitor;
     private String electionGUIDZNodePath;
 
     public ZKElectableClient(YamlType properties) throws Exception {
@@ -72,9 +72,9 @@ public abstract class ZKElectableClient implements Watcher, ZNodeDeletionMonitor
         return isLeader;
     }
 
-    private ZNodeDeletionMonitor getZNodeDeletionMonitor() {
-        assert null != zNodeDeletionMonitor;
-        return zNodeDeletionMonitor;
+    private ZNodeMonitor getZNodeDeletionMonitor() {
+        assert null != zNodeMonitor;
+        return zNodeMonitor;
     }
 
     protected final String getElectionGUIDZNodePath() {
@@ -183,13 +183,13 @@ public abstract class ZKElectableClient implements Watcher, ZNodeDeletionMonitor
     }
 
     private void resetZNodeDeletionMonitor() throws KeeperException, InterruptedException {
-        zNodeDeletionMonitor = new ZNodeDeletionMonitor(getZooKeeper(), getZNodePathToWatch(null), this);
+        zNodeMonitor = new ZNodeMonitor(getZooKeeper(), getZNodePathToWatch(null), this);
     }
 
     // watcher
 
     public void process(WatchedEvent event) {
-        if (null != zNodeDeletionMonitor) {
+        if (null != zNodeMonitor) {
             getZNodeDeletionMonitor().process(event);
         }
     }

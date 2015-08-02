@@ -17,11 +17,11 @@ public class ZNodeMonitor implements Watcher, AsyncCallback.StatCallback {
     ZooKeeper zk=null;
     String zNodePath;
     boolean isZookeeperSesionClosed = false;
-    ZNodeDeletionMonitorListener listener = null;
+    ZNodeMonitorListener listener = null;
 
 
 
-    public interface ZNodeDeletionMonitorListener {
+    public interface ZNodeMonitorListener {
         void onZNodeDeleted();
         void onZooKeeperSessionClosed();
     }
@@ -39,13 +39,13 @@ public class ZNodeMonitor implements Watcher, AsyncCallback.StatCallback {
         return isZookeeperSesionClosed;
     }
 
-    private ZNodeDeletionMonitorListener getListener() {
+    private ZNodeMonitorListener getListener() {
         assert null != listener;
         return listener;
     }
 
     public ZNodeMonitor(ZooKeeper zookeeper, String zNodePath,
-                        ZNodeDeletionMonitorListener listener) {
+                        ZNodeMonitorListener listener) {
         this.zk = zookeeper;
         this.zNodePath = zNodePath;
         this.listener = listener;

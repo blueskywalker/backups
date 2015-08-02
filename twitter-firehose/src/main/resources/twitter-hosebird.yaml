@@ -1,5 +1,5 @@
 
-endpoint: sample
+endpoint: firehose
 
 sample:
     consumer.key: VGWiRGOdMu9Y3pcksiOdE3MEr
@@ -8,10 +8,10 @@ sample:
     access.secret: 7GqtnjuqJ3EQ21x7TemekIt0ZhrJvZe3LfEQTEhlxbz0a
 
 firehose:
-    consumer.key: VGWiRGOdMu9Y3pcksiOdE3MEr
-    consumer.secret: EO1stDon9mO3476C5KfSMBSVTtCoKNvMnwmrrCKch8GyHxizr7
-    access.token: 2863371078-LIq50fdiV3oYhI3jN0bKmjvgYWPwUpuPODEkRat
-    access.secret: 7GqtnjuqJ3EQ21x7TemekIt0ZhrJvZe3LfEQTEhlxbz0a
+    consumer.key: VKcDfsiSBwpWUDsVvPu7w
+    consumer.secret: afZgvrI2GcP8GpFN57Ecqgo4GHCbWD7femlavjSBV8M
+    access.token: 2377136498-AgdXMfCiSWFUYjjq6zFW1JsWACSoAtZSRbtyJSP
+    access.secret: 3qRDnRArCAaQHzYItzZQpuyJAk7U90ijyv0u7LGwdPobw
 
 enterprise:
     user.name: a

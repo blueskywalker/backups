@@ -15,7 +15,9 @@ import java.util.Properties;
 import java.util.TimeZone;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.zip.Deflater;
 import java.util.zip.GZIPOutputStream;
 
 /**
@@ -32,14 +34,16 @@ public class BackupConsumer extends Thread {
     private final BlockingQueue<String> queue;
     private final Properties properties;
     private final FileSystem fs;
-    private OutputStream gzip;
+    private GZIPOutputStream gzip;
     private static AtomicInteger fileCounter = new AtomicInteger(0);
     private final int messageCount;
     private String fileName;
     private final String filePrefix;
+    final BackupTool tool;
     boolean done;
 
     public BackupConsumer(final BackupTool tool) throws IOException {
+        this.tool = tool;
         this.queue = tool.getQueue();
         this.properties = tool.getProperties();
         this.fs = tool.getFs();
@@ -50,14 +54,14 @@ public class BackupConsumer extends Thread {
 
 
     protected void open() throws IOException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHH");
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         long currentTime = System.currentTimeMillis();
-        String hour = format.format(new Date(currentTime));
-        String rootDir = String.format("%s/%s", properties.getProperty(BACKUP_DIR_KEY, "/backup"), hour);
+        String day = format.format(new Date(currentTime));
+        String rootDir = String.format("%s/%s", properties.getProperty(BACKUP_DIR_KEY, "/backup"), day);
 
         Path rootPath = new Path(rootDir);
-        synchronized (fileCounter) {
+        synchronized (tool) {
             if (!fs.exists(rootPath)) {
                 fs.mkdirs(rootPath);
                 fileCounter.set(0);
@@ -73,20 +77,24 @@ public class BackupConsumer extends Thread {
                             try {
                                 max = Math.max(max, Integer.valueOf(fileParts[2]));
                             } catch (Exception e) {
-                                ;
+                                logger.error(e,e);
                             }
                         }
                     }
                 }
                 fileCounter.set(max + 1);
             }
-        }
 
-        int fileNumber = fileCounter.getAndIncrement();
-        fileName = String.format("%s/%s_%s_%06d.gz", rootDir, filePrefix, hour, fileNumber);
-        Path path = new Path(fileName);
-        FSDataOutputStream fsdos = fs.create(path);
-        gzip = new BufferedOutputStream(new GZIPOutputStream(fsdos));
+            format = new SimpleDateFormat("yyyyMMddHH");
+            format.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String hour = format.format(new Date(currentTime));
+            int fileNumber = fileCounter.getAndIncrement();
+            fileName = String.format("%s/%s_%s_%06d.gz", rootDir, filePrefix, hour, fileNumber);
+            Path path = new Path(fileName);
+            logger.info("CREATE-" + path.getName());
+            FSDataOutputStream fsdos = fs.create(path);
+            gzip = new GZIPOutputStream(fsdos);
+        }
     }
 
     protected void close() {
@@ -94,7 +102,7 @@ public class BackupConsumer extends Thread {
 
             logger.info("gzip is closing....");
             try {
-                //gzip.finish();
+                gzip.finish();
                 gzip.close();
             } catch (IOException e) {
                 logger.error(e,e);
@@ -118,14 +126,15 @@ public class BackupConsumer extends Thread {
 
         String msg;
         try {
-            while (!done) {
-                msg = queue.take();
+            while (!done && !tool.isDone()) {
+                msg = queue.poll(10, TimeUnit.SECONDS);
+                if(msg == null) continue;
 
                 if (gzip == null) {
                     open();
                 }
 
-                gzip.write(addNewLine(msg).getBytes("UTF-8"));
+                gzip.write(msg.getBytes("UTF-8"));
                 count++;
 
                 if (count == messageCount) {
@@ -140,12 +149,14 @@ public class BackupConsumer extends Thread {
             }
 
         } catch (Exception e) {
-            logger.error("EXIT FROM LOOP", e);
+            logger.error(e, e);
         } finally {
             close();
         }
 
+        tool.setDone(true);
         logger.info(String.format("BACKUP CONSUMER (%d) is done", getId()));
+
     }
 
     public void setDone() {

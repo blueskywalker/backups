@@ -121,20 +121,18 @@ public class BackupTool implements Runnable {
             kafkaConsumer.shutdown();
             logger.info("Producer is waiting");
             for (BackupProducer p : producerGroup) {
-                p.join();
+                p.join(100);
             }
             logger.info("Consumer is closing");
             for (BackupConsumer c : consumerGroup) {
-                c.join();
+                c.join(100);
             }
 
             logger.info("FILESYSTEM CLOSE");
             fs.close();
 
-            done = true;
-            synchronized (this) {
-                notify();
-            }
+            setDone(true);
+
         } catch (Exception e) {
             logger.error("BACKUP_TOOL", e);
         }
@@ -150,6 +148,15 @@ public class BackupTool implements Runnable {
 
     public FileSystem getFs() {
         return fs;
+    }
+
+    public synchronized boolean isDone() {
+        return done;
+    }
+
+    public synchronized void setDone(boolean done) {
+        this.done = done;
+        notifyAll();
     }
 
     public static void main(String[] args) {

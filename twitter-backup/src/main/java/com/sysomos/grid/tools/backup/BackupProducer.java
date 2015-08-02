@@ -16,11 +16,12 @@ public class BackupProducer extends Thread {
 
     final KafkaStream<byte[], byte[]> stream;
     final BlockingQueue<String> queue;
+    final BackupTool tool;
 
     public BackupProducer(final KafkaStream<byte[], byte[]> stream, final BackupTool tool) {
         this.stream = stream;
+        this.tool=tool;
         this.queue = tool.getQueue();
-
     }
 
     @Override
@@ -28,14 +29,14 @@ public class BackupProducer extends Thread {
 
         ConsumerIterator<byte[], byte[]> iterator = stream.iterator();
 
-        while (iterator != null && iterator.hasNext()) {
+        while (iterator != null && iterator.hasNext() && !tool.isDone()) {
             try {
                 queue.put(new String(iterator.next().message()));
             } catch (InterruptedException e) {
                 logger.error("QUEUE PUT FAIL", e);
             }
         }
-
+        tool.setDone(true);
         logger.info(String.format("Producer (%d) is done.", getId()));
     }
 
