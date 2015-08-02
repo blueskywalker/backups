@@ -11,8 +11,8 @@ import org.apache.zookeeper.data.Stat;
  *
  * @author kkim
  */
-public class ZNodeDeletionMonitor implements Watcher, AsyncCallback.StatCallback {
-    public static final Logger logger = Logger.getLogger(ZNodeDeletionMonitor.class);
+public class ZNodeMonitor implements Watcher, AsyncCallback.StatCallback {
+    public static final Logger logger = Logger.getLogger(ZNodeMonitor.class);
 
     ZooKeeper zk=null;
     String zNodePath;
@@ -44,8 +44,8 @@ public class ZNodeDeletionMonitor implements Watcher, AsyncCallback.StatCallback
         return listener;
     }
 
-    public ZNodeDeletionMonitor(ZooKeeper zookeeper,String zNodePath,
-                                ZNodeDeletionMonitorListener listener) {
+    public ZNodeMonitor(ZooKeeper zookeeper, String zNodePath,
+                        ZNodeDeletionMonitorListener listener) {
         this.zk = zookeeper;
         this.zNodePath = zNodePath;
         this.listener = listener;
