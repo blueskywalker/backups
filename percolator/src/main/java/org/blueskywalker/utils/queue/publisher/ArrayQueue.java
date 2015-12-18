@@ -36,9 +36,9 @@ public class ArrayQueue<E> extends AbstractQueue<E>
     /** Main lock guarding all access */
     final ReentrantLock lock;
     /** Condition for waiting takes */
-    private final Condition notEmpty;
+    protected final Condition notEmpty;
     /** Condition for waiting puts */
-    private final Condition notFull;
+    protected final Condition notFull;
 
     /**
      * Circularly increment i.
@@ -80,7 +80,7 @@ public class ArrayQueue<E> extends AbstractQueue<E>
      * Inserts element at current put position, advances, and signals.
      * Call only when holding lock.
      */
-    private void insert(E x) {
+    protected void insert(E x) {
         items[putIndex] = x;
         putIndex = inc(putIndex);
         ++count;
@@ -91,7 +91,7 @@ public class ArrayQueue<E> extends AbstractQueue<E>
      * Extracts element at current take position, advances, and signals.
      * Call only when holding lock.
      */
-    private E extract() {
+    protected E extract() {
         final Object[] items = this.items;
         E x = this.<E>cast(items[takeIndex]);
         items[takeIndex] = null;
@@ -145,7 +145,7 @@ public class ArrayQueue<E> extends AbstractQueue<E>
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new Itr();
     }
 
     @Override
@@ -339,6 +339,21 @@ public class ArrayQueue<E> extends AbstractQueue<E>
         }
     }
 
+    public boolean contains(Object o) {
+        if (o == null) return false;
+        final Object[] items = this.items;
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+            for (int i = takeIndex, k = count; k > 0; i = inc(i), k--)
+                if (o.equals(items[i]))
+                    return true;
+            return false;
+        } finally {
+            lock.unlock();
+        }
+    }
+
     public Object[] toArray() {
         final Object[] items = this.items;
         final ReentrantLock lock = this.lock;
@@ -373,6 +388,22 @@ public class ArrayQueue<E> extends AbstractQueue<E>
         }
     }
 
+    public void clear() {
+        final Object[] items = this.items;
+        final ReentrantLock lock = this.lock;
+        lock.lock();
+        try {
+            for (int i = takeIndex, k = count; k > 0; i = inc(i), k--)
+                items[i] = null;
+            count = 0;
+            putIndex = 0;
+            takeIndex = 0;
+            notFull.signalAll();
+        } finally {
+            lock.unlock();
+        }
+    }
+    
     public String toString() {
         final ReentrantLock lock = this.lock;
         lock.lock();
@@ -392,6 +423,75 @@ public class ArrayQueue<E> extends AbstractQueue<E>
             }
         } finally {
             lock.unlock();
+        }
+    }
+
+    private class Itr implements Iterator<E> {
+        private int remaining; // Number of elements yet to be returned
+        private int nextIndex; // Index of element to be returned by next
+        private E nextItem;    // Element to be returned by next call to next
+        private E lastItem;    // Element returned by last call to next
+        private int lastRet;   // Index of last element returned, or -1 if none
+
+        Itr() {
+            final ReentrantLock lock = ArrayQueue.this.lock;
+            lock.lock();
+            try {
+                lastRet = -1;
+                if ((remaining = count) > 0)
+                    nextItem = itemAt(nextIndex = takeIndex);
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        public boolean hasNext() {
+            return remaining > 0;
+        }
+
+        public E next() {
+            final ReentrantLock lock = ArrayQueue.this.lock;
+            lock.lock();
+            try {
+                if (remaining <= 0)
+                    throw new NoSuchElementException();
+                lastRet = nextIndex;
+                E x = itemAt(nextIndex);  // check for fresher value
+                if (x == null) {
+                    x = nextItem;         // we are forced to report old value
+                    lastItem = null;      // but ensure remove fails
+                }
+                else
+                    lastItem = x;
+                while (--remaining > 0 && // skip over nulls
+                        (nextItem = itemAt(nextIndex = inc(nextIndex))) == null)
+                    ;
+                return x;
+            } finally {
+                lock.unlock();
+            }
+        }
+
+        public void remove() {
+            final ReentrantLock lock = ArrayQueue.this.lock;
+            lock.lock();
+            try {
+                int i = lastRet;
+                if (i == -1)
+                    throw new IllegalStateException();
+                lastRet = -1;
+                E x = lastItem;
+                lastItem = null;
+                // only remove if item still at index
+                if (x != null && x == items[i]) {
+                    boolean removingHead = (i == takeIndex);
+                    removeAt(i);
+                    if (!removingHead)
+                        nextIndex = dec(nextIndex);
+                }
+            } finally {
+                lock.unlock();
+            }
         }
     }
 }

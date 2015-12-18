@@ -12,8 +12,9 @@ import java.util.TimeZone;
  * Created by kkim on 9/1/15.
  */
 public class TwitterComplianceConsumer extends BackupConsumer {
-    public TwitterComplianceConsumer(BackupTool tool) throws IOException {
+    public TwitterComplianceConsumer(TwitterBackupTool tool) throws IOException {
         super(tool);
+        queue=tool.getCompliance();
     }
 
 
@@ -23,6 +24,6 @@ public class TwitterComplianceConsumer extends BackupConsumer {
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         long currentTime = System.currentTimeMillis();
         String day = format.format(new Date(currentTime));
-        return String.format("%s/compliance/%s", properties.getProperty(BACKUP_DIR_KEY, "/backup"), day);
+        return String.format("%s/%s/compliance", properties.getProperty(BACKUP_DIR_KEY, "/backup"), day);
     }
 }

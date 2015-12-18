@@ -18,15 +18,16 @@ require 'tempfile'
 $VERSION=0.01
 
 ZK_DEV='sjkf01:2181,sjkf02:2181,sjkf03:2181'
-ZK_STAGING='rtzk01:2181,rtzk02:2181,rtzk03:2181'
-#ZK_PROD='srzk34032:2181,srzk34050:2181,srzk34066:2181,srzk35032:2181,srzk35073:2181,srzk35080:2181,srzk35081:2181,srzk35088:2181,srzk35092:2181'
-ZK_PROD='srzk01:2181,srzk02:2181,srzk03:2181'
-ZK_BACKUP='solrzktst01:2181,solrzktst02:2181,solrzktst03:2181'
+ZK_STAGING='stgzj001:2181,stgzj002:2181,stgzj003:2181'
+#ZK_STAGING='localhost:2181'
+#ZK_PROD='srzk01:2181,srzk02:2181,srzk03:2181'
+ZK_PROD='slrpzk003:2181,slrpzk002:2181,slrpzk001:2181,slrpzk005:2181,slrpzk004:2181,slrpzk005:2181,slrpzk006:2181,slrpzk007:2181,slrpzk008:2181,slrpzk009:2181'
+ZK_BACKUP='rtzk01:2181,rtzk02:2181,rtzk03:2181'
 #ZK_BACKUP='bkzk34058:2181,bkzk34047:2181,bkzk34063:2181,dsadtt03:2181,dsadtt04:2181'
 TEST_SOLR='solrzktst01:2181,solrzktst02:2181,solrzktst03:2181'
 
 class CommandOption
-  @@commands=[ :lives, :status, :aliases, :collection, :get ,:ls, :put, :push_key, :service, :query, :fetch , :shard, :index]
+  @@commands=[ :lives, :status, :aliases, :collection, :get ,:ls, :put, :remove, :push_key, :service, :query, :fetch , :shard, :index]
   @@clusters={ :dev => ZK_DEV, :staging => ZK_STAGING, :prod => ZK_PROD, :backup => ZK_BACKUP , :testing => TEST_SOLR}
   @@options = {}
 
@@ -46,7 +47,7 @@ class CommandOption
         @@options[:command] = command
       end
 
-      opts.on('-v','--version' , "show version") do 
+      opts.on('-v','--version' , "show version") do
         puts "#{__FILE__} - #{$VERSION}"
         exit
       end
@@ -59,13 +60,13 @@ class CommandOption
     end
 
     if not @@options.has_key? :cluster or not @@options.has_key? :command then
-      puts optparse 
+      puts optparse
       exit
     end
   end
 
   def self.cluster
-    return @@options[:cluster] 
+    return @@options[:cluster]
   end
 
   def self.zkhost
@@ -73,7 +74,7 @@ class CommandOption
   end
 
   def self.command
-    return @@options[:command] 
+    return @@options[:command]
   end
 
 end
@@ -121,6 +122,10 @@ class SolrCloud
     @zookeeper.set(:path => dest, :data => data)
   end
 
+  def remove(path)
+    p @zookeeper.delete(:path => path)
+  end
+
   def root
     @solr_root
   end
@@ -128,20 +133,20 @@ end
 
 
 class SolrQuery
-  attr_accessor :q, :start, :rows, :sort, :fl 
+  attr_accessor :q, :start, :rows, :sort, :fl
 
   def initialize
   end
 end
 
 class SysomosDataSource
-  @@kind= { 
-    :facebook => "FB", 
-    :twitter => "TT", 
-    :tumbler => "TB", 
-    :news => "NW", 
-    :blog => "BL", 
-    :forum => "FR" 
+  @@kind= {
+    :facebook => "FB",
+    :twitter => "TT",
+    :tumbler => "TB",
+    :news => "NW",
+    :blog => "BL",
+    :forum => "FR"
   }
 end
 
@@ -161,9 +166,9 @@ end
 #
 class SysomosAPI
   attr_accessor :path, :query ,:startDate,:endDate,:dataSrcs,:fq,:startRow,:rows,:sortBy,:sortDir,:fields, :facetType
-  attr_accessor :facetField,:facetQuery,:start,:endd,:gap
+  attr_accessor :facetField,:facetQuery,:start,:endd, :gap, :timezone
 
-  def get_data_source        
+  def get_data_source
     if self.dataSrcs == nil or self.dataSrcs.strip == "" then
       SysomosAPI.kind.keys
     else
@@ -171,7 +176,7 @@ class SysomosAPI
     end
   end
 
-  def month_from(ts) 
+  def month_from(ts)
     Time.at(ts).gmtime.strftime("%Y%m")
   end
 
@@ -208,7 +213,7 @@ class SysomosAPI
 
     qry=query
     sort_by = nil
-    params = {} 
+    params = {}
     if path == '/api/rest/v1/posts' then
       case sortBy
       when "lucence"
@@ -224,14 +229,14 @@ class SysomosAPI
       when "datainfluence2"
         qry = "{!dateinfluence2}#{q}"
       else
-        sort_by = "createDate desc"    
-      end            
+        sort_by = "createDate desc"
+      end
       params = { :q => qry,
                  :start => startRow==nil ? 0 : startRow,
                  :rows => rows == nil  ? 0 : rows,
-                 :fl => [ :id , :createDate, :score ], 
+                 :fl => [ :id , :createDate, :score ],
                  :sort => sort_by,
-                 :fq => fq == nil ? [] : fq.split('|') 
+                 :fq => fq == nil ? [] : fq.split('|')
       }
       params[:fq] <<  "createDate:[ #{startDate.to_i / 1000} TO #{endDate.to_i / 1000} ]"
 
@@ -240,7 +245,8 @@ class SysomosAPI
     elsif path == '/api/rest/v1/post/perday' then
 
       params = { :q => qry,
-                 :start => startRow,
+                 :startDate => startDate,
+                 :endDate => endDate,
                  :rows => 0,
                  :facet => 'on',
                  'facet.range' => 'createDate',
@@ -310,7 +316,7 @@ class SolrNode
 
   def url
     "http://#{@host}:#{@port}/#{@base}"
-  end 
+  end
 
   def self.from_zk(node)
     host_name, port_number, base_url = node.split(/[:_]/)
@@ -321,7 +327,7 @@ class SolrNode
     `cat "$HOME/.ssh/id_rsa.pub" | ssh root@#{@host} "cat >> /root/.ssh/authorized_keys"`
   end
 
-  def service(cmd) 
+  def service(cmd)
     %x(ssh root@#{@host} "service solr-server #{cmd}" )
   end
 
@@ -344,11 +350,11 @@ class SolrNode
 
   def to_s
     url
-  end    
+  end
 end
 
 class SolrAdmin < SolrNode
-  def collection(cmd) 
+  def collection(cmd)
     host="#{self.url}/admin/collections"
     cmd['wt']='json' if not cmd.has_key?('wt')
     cmd['indent']='true' if not cmd.has_key?('indent')
@@ -420,9 +426,9 @@ def mprocess(nodes)
 
   nodes.each do |node|
     index = node.index(':')
-    host =  index > 0 ? node[0,index] : node 
+    host =  index > 0 ? node[0,index] : node
     puts "process #{host}"
-    Process.fork do 
+    Process.fork do
       File.open("/tmp/#{host}.output.txt",'w')  do |f|
         ret=yield node
         f.write( "#{host} - #{ret}" )
@@ -437,7 +443,7 @@ def mprocess(nodes)
 
   nodes.each do |node|
     index = node.index(':')
-    host =  index > 0 ? node[0,index] : node 
+    host =  index > 0 ? node[0,index] : node
     File.open("/tmp/#{host}.output.txt",'r') do |f|
       puts f.readlines
     end
@@ -484,7 +490,7 @@ class ExecuteCommand
          puts "wrong command please check command"
        end
      end
-     
+
   end
 
   def aliases(args)
@@ -517,6 +523,10 @@ class ExecuteCommand
     end
   end
 
+  def remove(args)
+    solr.remove args[0]
+  end
+
   def service(args)
     if args.size == 0 then
       puts "need (status,start,stop,restart)"
@@ -529,7 +539,7 @@ class ExecuteCommand
           SolrNode.from_zk(node).service args[0]
         end
       else
-        mprocess(solr.lives) do |node| 
+        mprocess(solr.lives) do |node|
           SolrNode.from_zk(node).service args[0]
         end
       end
@@ -571,17 +581,17 @@ class ExecuteCommand
   end
 
   def query(args)
-    begin 
+    begin
       get_querys(args).each do |url|
         puts URI.escape(url)
       end
     rescue ArgumentError => e
       puts e
-    end 
-  end 
+    end
+  end
 
   def fetch(args)
-    begin 
+    begin
       get_querys(args).each do |url|
         #puts url
         http=Curl.get(URI.escape(url))
@@ -589,11 +599,11 @@ class ExecuteCommand
       end
     rescue ArgumentError => e
       puts e
-    end 
+    end
   end
 
   def shard(args)
-    begin 
+    begin
       status=solr.status
       status.keys.sort.each do |key|
         shards=status[key]['shards']
@@ -607,11 +617,11 @@ class ExecuteCommand
 
     rescue  => e
       puts e
-    end 
+    end
 
   end
-  
-  def getUrl(url) 
+
+  def getUrl(url)
   	begin
   		response=`curl -s "#{URI.escape(url)}"`
   	rescue => e
@@ -619,24 +629,24 @@ class ExecuteCommand
   	end
   	response
   end
-  
+
   def index(args)
   	begin
   		nodes=solr.lives
   		status=solr.status
-  		solr.collections.each do |c|  			 			 			
-  			shards=status[c]['shards']  			
+  		solr.collections.each do |c|
+  			shards=status[c]['shards']
   			random=Random.rand(shards.keys.size)
   			shard="shard#{random+1}"
-  			core, values=shards[shard]['replicas'].first  			
+  			core, values=shards[shard]['replicas'].first
   			url = "#{values['base_url']}/#{values['core']}/select?q=*:*&wt=json&rows=0"
 			puts "#{Time.now.utc.to_i } | #{c} | #{getUrl(url)}"
   		end
   	rescue => e
-  		puts e 
-  	end	
+  		puts e
+  	end
   end
-  
+
   def collection_create(args)
     admin = SolrAdmin.from_lives(solr.lives)
     if args.size > 0 then
@@ -656,7 +666,7 @@ class ExecuteCommand
 
     if args.size == 0 then
       print "are you sure to reload all collections? [y/N]"
-      case $stdin.gets.strip 
+      case $stdin.gets.strip
       when 'Y','y'
         solr.collections.each do |c|
           puts c
@@ -675,7 +685,7 @@ class ExecuteCommand
     admin = SolrAdmin.from_lives(solr.lives)
     if args.size == 0 then
       print "are you sure to delete all collections? [y/N]"
-      case $stdin.gets.strip 
+      case $stdin.gets.strip
       when 'Y','y'
         solr.collections.each do |c|
           puts c
@@ -715,10 +725,10 @@ class ExecuteCommand
       filename="/tmp/solr_#{CommandOption.cluster}_clusterstate.json"
       File.open(filename,"w") do |f|
         f.write(JSON.pretty_generate(status))
-      end 
+      end
 
       print "are you sure to reload all collections? [y/N]"
-      case $stdin.gets.strip 
+      case $stdin.gets.strip
       when 'Y','y'
         self.send('put','/solr/clusterstate.json',filename)
       else
@@ -731,7 +741,7 @@ class ExecuteCommand
 
   def delete(args)
     if args.size > 1 then
-      collection = args[0] 
+      collection = args[0]
       if solr.collections.include? collection
          stat=JSON.parse(solr.stat(collection))
          node=stat[collection]['shards']['shard1']['replicas']['core_node1']['node_name']
@@ -756,6 +766,3 @@ main
 # puts collection
 # actions= { :action => 'CREATEALIAS', :name => 'last_30_days_alias_NW', :collections =>  'post_NW_201411' }
 # collection_api(nodes[0].sub!('_','/'),actions)
-
-
-

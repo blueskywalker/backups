@@ -20,7 +20,8 @@ public class TwitterBackupTool extends BackupTool  {
 
     public TwitterBackupTool() throws IOException {
         super();
-        compliance= new ArrayBlockingQueue<String>(getQueue().size());
+        int queueSize = Integer.valueOf(properties.getProperty(BACKUP_MESSAGE_QUEUE_SIZE, "10000"));
+        compliance= new ArrayBlockingQueue<String>(queueSize);
     }
 
     public BlockingQueue<String> getCompliance() {
@@ -60,7 +61,7 @@ public class TwitterBackupTool extends BackupTool  {
 
             for(int i=0;i<complianceSize;i++) {
                 consumerGroup.add(new TwitterComplianceConsumer(this));
-                consumerGroup.get(i).start();
+                consumerGroup.get(i+consumerSize).start();
             }
 
         } catch (IOException e) {
@@ -80,5 +81,29 @@ public class TwitterBackupTool extends BackupTool  {
         }
 
         logger.info("BackupTool is done");
+    }
+
+    public static void main(String[] args) {
+
+        try {
+            final TwitterBackupTool backupTool = new TwitterBackupTool();
+
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                @Override
+                public void run() {
+                    backupTool.shutdown();
+                }
+            });
+
+            backupTool.run();
+
+            logger.info("BACKUP HAS DONE");
+
+
+        } catch (Exception e) {
+            logger.error("BACKUP HAS STOPPED", e);
+        }
+
+        System.exit(0);
     }
 }

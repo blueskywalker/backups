@@ -14,9 +14,9 @@ import java.util.concurrent.BlockingQueue;
 public class BackupProducer extends Thread {
     public static Logger logger = Logger.getLogger(BackupProducer.class);
 
-    final KafkaStream<byte[], byte[]> stream;
-    final BlockingQueue<String> queue;
-    final BackupTool tool;
+    protected final KafkaStream<byte[], byte[]> stream;
+    protected final BlockingQueue<String> queue;
+    protected final BackupTool tool;
 
     public BackupProducer(final KafkaStream<byte[], byte[]> stream, final BackupTool tool) {
         this.stream = stream;

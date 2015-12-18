@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/twitter-baskup.iml" filepath="$PROJECT_DIR$/twitter-baskup.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backup-tool.iml" filepath="$PROJECT_DIR$/backup-tool.iml" />
     </modules>
   </component>
 </project>

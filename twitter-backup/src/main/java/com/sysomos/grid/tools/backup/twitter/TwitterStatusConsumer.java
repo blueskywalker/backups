@@ -12,7 +12,7 @@ import java.util.TimeZone;
  * Created by kkim on 9/1/15.
  */
 public class TwitterStatusConsumer extends BackupConsumer {
-    public TwitterStatusConsumer(BackupTool tool) throws IOException {
+    public TwitterStatusConsumer(TwitterBackupTool tool) throws IOException {
         super(tool);
     }
 
@@ -22,6 +22,6 @@ public class TwitterStatusConsumer extends BackupConsumer {
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         long currentTime = System.currentTimeMillis();
         String day = format.format(new Date(currentTime));
-        return String.format("%s/status/%s", properties.getProperty(BACKUP_DIR_KEY, "/backup"), day);
+        return String.format("%s/%s/status", properties.getProperty(BACKUP_DIR_KEY, "/backup"), day);
     }
 }

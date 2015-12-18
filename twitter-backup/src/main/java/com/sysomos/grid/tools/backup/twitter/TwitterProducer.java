@@ -12,16 +12,17 @@ import java.util.concurrent.BlockingQueue;
  */
 public class TwitterProducer extends BackupProducer {
     final BlockingQueue<String> compliance;
-    public TwitterProducer(KafkaStream<byte[], byte[]> stream, BackupTool tool) {
+    public TwitterProducer(KafkaStream<byte[], byte[]> stream, TwitterBackupTool tool) {
         super(stream, tool);
-        compliance = ((TwitterBackupTool)tool).getCompliance();
+        compliance = tool.getCompliance();
     }
 
     @Override
     public void run() {
+        logger.info("TwitterProducer has been started");
 
         ConsumerIterator<byte[], byte[]> iterator = stream.iterator();
-
+        long counter=0;
         while (iterator != null && iterator.hasNext() && !tool.isDone()) {
             try {
                 String msg = new String(iterator.next().message());
@@ -30,6 +31,8 @@ public class TwitterProducer extends BackupProducer {
                 } else {
                     queue.put(msg);
                 }
+                if ( (++counter%100000) == 0)
+                    logger.info(Thread.currentThread().getName() + " is producing");
             } catch (InterruptedException e) {
                 logger.error("QUEUE PUT FAIL", e);
             }

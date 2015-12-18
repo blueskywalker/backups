@@ -1,0 +1,13 @@
+# YAML TEST
+---
+
+map:
+  first : 1
+  second : 2
+
+list:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5 :  Hello World

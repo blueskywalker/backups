@@ -31,15 +31,15 @@ public class BackupConsumer extends Thread {
     public final static String BACKUP_FILE_PREFIX = "backup.file.prefix";
     public final static String BACKUP_DIR_KEY = "backup.dir";
 
-    private final BlockingQueue<String> queue;
-    private final Properties properties;
-    private final FileSystem fs;
-    private GZIPOutputStream gzip;
-    private static AtomicInteger fileCounter = new AtomicInteger(0);
-    private final int messageCount;
-    private String fileName;
-    private final String filePrefix;
-    final BackupTool tool;
+    protected BlockingQueue<String> queue;
+    protected final Properties properties;
+    protected final FileSystem fs;
+    protected GZIPOutputStream gzip;
+    protected static AtomicInteger fileCounter = new AtomicInteger(0);
+    protected final int messageCount;
+    protected String fileName;
+    protected final String filePrefix;
+    protected final BackupTool tool;
     boolean done;
 
     public BackupConsumer(final BackupTool tool) throws IOException {
@@ -52,13 +52,26 @@ public class BackupConsumer extends Thread {
         done=false;
     }
 
-
-    protected void open() throws IOException {
+    protected String getRootdir() {
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         long currentTime = System.currentTimeMillis();
         String day = format.format(new Date(currentTime));
-        String rootDir = String.format("%s/%s", properties.getProperty(BACKUP_DIR_KEY, "/backup"), day);
+        return String.format("%s/%s", properties.getProperty(BACKUP_DIR_KEY, "/backup"), day);
+    }
+
+    protected String getFilename(String rootDir) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHH");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        long currentTime = System.currentTimeMillis();
+        String hour = format.format(new Date(currentTime));
+        int fileNumber = fileCounter.getAndIncrement();
+        return String.format("%s/%s_%s_%06d.gz", rootDir, filePrefix, hour, fileNumber);
+    }
+
+
+    protected void open() throws IOException {
+        String rootDir = getRootdir();
 
         Path rootPath = new Path(rootDir);
         synchronized (tool) {
@@ -85,11 +98,8 @@ public class BackupConsumer extends Thread {
                 fileCounter.set(max + 1);
             }
 
-            format = new SimpleDateFormat("yyyyMMddHH");
-            format.setTimeZone(TimeZone.getTimeZone("UTC"));
-            String hour = format.format(new Date(currentTime));
-            int fileNumber = fileCounter.getAndIncrement();
-            fileName = String.format("%s/%s_%s_%06d.gz", rootDir, filePrefix, hour, fileNumber);
+
+            fileName = getFilename(rootDir);
             Path path = new Path(fileName);
             logger.info("CREATE-" + path.getName());
             FSDataOutputStream fsdos = fs.create(path);

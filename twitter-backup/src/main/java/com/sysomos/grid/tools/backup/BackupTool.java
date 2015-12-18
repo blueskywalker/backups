@@ -31,15 +31,15 @@ public class BackupTool implements Runnable {
 
 
     // members
-    private final Properties properties = new Properties();
-    private final int threadCount;
-    private final String topic;
-    private final ConsumerConnector kafkaConsumer;
-    private final BlockingQueue<String> queue;
-    private final List<BackupProducer> producerGroup;
-    private final List<BackupConsumer> consumerGroup;
-    private final FileSystem fs;
-    private boolean done;
+    protected final Properties properties = new Properties();
+    protected final int threadCount;
+    protected final String topic;
+    protected final ConsumerConnector kafkaConsumer;
+    protected final BlockingQueue<String> queue;
+    protected final List<BackupProducer> producerGroup;
+    protected final List<BackupConsumer> consumerGroup;
+    protected final FileSystem fs;
+    protected boolean done;
 
     public BackupTool() throws IOException {
 

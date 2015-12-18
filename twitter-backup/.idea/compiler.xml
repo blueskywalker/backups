@@ -23,11 +23,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="twitter-baskup" />
+        <module name="backup-tool" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="twitter-baskup" target="1.5" />
+      <module name="backup-tool" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
