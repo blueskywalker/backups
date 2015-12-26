@@ -9,6 +9,7 @@ import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 /**
  *
@@ -21,14 +22,15 @@ public class KafkaConsumerService extends ThreadService {
     final Map<String, List<KafkaStream<byte[], byte[]>>> consumerStreamsMap;
     final String topic;
 
-    public KafkaConsumerService(Runnable[] runners, Properties properties) {
+    public KafkaConsumerService(Runnable[] runners, Properties properties) throws IllegalArgumentException {
         this(runners,properties,null);
     }
 
-    public KafkaConsumerService(Runnable[] runners, Properties properties,Object param) {
+    public KafkaConsumerService(Runnable[] runners, Properties properties,Object param) throws  IllegalArgumentException {
         super(runners,param);
 
         topic = (String) properties.get(CONSUMER_TOPIC);
+        if(topic==null) throw new IllegalArgumentException(topic);
         kafkaConsumer = Consumer.createJavaConsumerConnector(new ConsumerConfig(properties));
         Map<String, Integer> topicMap = new HashMap<String, Integer>();
         topicMap.put(topic, runners.length);
@@ -40,6 +42,7 @@ public class KafkaConsumerService extends ThreadService {
             counter++;
         }
     }
+
 
     public static abstract class KafkaRunnable implements Runnable {
         final Object option;

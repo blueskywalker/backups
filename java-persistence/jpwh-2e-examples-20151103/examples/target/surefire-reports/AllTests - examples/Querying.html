@@ -1,0 +1,254 @@
+<html>
+<head>
+<title>TestNG:  Querying</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Querying</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>35/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Sat Dec 19 12:05:46 PST 2015</td>
+</tr>
+<tr><td>Total time:</td><td>63 seconds (63593 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='org.jpwh.test.querying.CreateExecuteQueries.createHibernateQueries()'><b>createHibernateQueries</b><br>Test class: org.jpwh.test.querying.CreateExecuteQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.CreateExecuteQueries@58c1670b</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.CreateExecuteQueries.createNamedQueries()'><b>createNamedQueries</b><br>Test class: org.jpwh.test.querying.CreateExecuteQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.CreateExecuteQueries@58c1670b</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.CreateExecuteQueries.createQueries()'><b>createQueries</b><br>Test class: org.jpwh.test.querying.CreateExecuteQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.CreateExecuteQueries@58c1670b</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.CreateExecuteQueries.createTypedQueries()'><b>createTypedQueries</b><br>Test class: org.jpwh.test.querying.CreateExecuteQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.CreateExecuteQueries@58c1670b</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.CreateExecuteQueries.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.CreateExecuteQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.CreateExecuteQueries@58c1670b</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.jpql.Joins.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.jpql.Joins</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.jpql.Joins@3e57cd70</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.sql.HibernateSQLQueries.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.sql.HibernateSQLQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.sql.HibernateSQLQueries@42f93a98</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.jpql.Projection.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.jpql.Projection</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.jpql.Projection@3d921e20</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.jpql.Selection.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.jpql.Selection</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.jpql.Selection@6b57696f</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.jpql.Grouping.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.jpql.Grouping</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.jpql.Grouping@c46bcd4</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.criteria.Joins.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.criteria.Joins</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.criteria.Joins@2353b3e6</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.criteria.Projection.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.criteria.Projection</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.criteria.Projection@5bb21b69</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.jpql.Restriction.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.jpql.Restriction</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.jpql.Restriction@1d8d30f7</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.criteria.Selection.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.criteria.Selection</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.criteria.Selection@45820e51</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.jpql.Subselects.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.jpql.Subselects</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.jpql.Subselects@32d2fa64</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.criteria.Grouping.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.criteria.Grouping</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.criteria.Grouping@42d8062c</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.criteria.Restriction.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.criteria.Restriction</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.criteria.Restriction@3234e239</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.criteria.Subselects.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.criteria.Subselects</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.criteria.Subselects@cb51256</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.advanced.FilterCollections.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.advanced.FilterCollections</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.advanced.FilterCollections@6043cd28</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.advanced.HibernateCriteria.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.advanced.HibernateCriteria</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.advanced.HibernateCriteria@587d1d39</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.advanced.TransformResults.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.advanced.TransformResults</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.advanced.TransformResults@1a8a8f7c</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.sql.NativeQueries.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.sql.NativeQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.sql.NativeQueries@2c039ac6</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.criteria.Typesafe.executeQueries()'><b>executeQueries</b><br>Test class: org.jpwh.test.querying.criteria.Typesafe</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.criteria.Typesafe@6b9651f3</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.jpql.Projection.executeQueriesWithFunctions()'><b>executeQueriesWithFunctions</b><br>Test class: org.jpwh.test.querying.jpql.Projection</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.jpql.Projection@3d921e20</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.criteria.Projection.executeQueriesWithFunctions()'><b>executeQueriesWithFunctions</b><br>Test class: org.jpwh.test.querying.criteria.Projection</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.criteria.Projection@5bb21b69</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.jpql.Restriction.executeQueriesWithFunctions()'><b>executeQueriesWithFunctions</b><br>Test class: org.jpwh.test.querying.jpql.Restriction</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.jpql.Restriction@1d8d30f7</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.criteria.Restriction.executeQueriesWithFunctions()'><b>executeQueriesWithFunctions</b><br>Test class: org.jpwh.test.querying.criteria.Restriction</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.criteria.Restriction@3234e239</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.sql.HibernateSQLQueries.executeRecursiveQueries()'><b>executeRecursiveQueries</b><br>Test class: org.jpwh.test.querying.sql.HibernateSQLQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.sql.HibernateSQLQueries@42f93a98</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.sql.NativeQueries.executeRecursiveQueries()'><b>executeRecursiveQueries</b><br>Test class: org.jpwh.test.querying.sql.NativeQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.sql.NativeQueries@2c039ac6</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.advanced.HibernateCriteria.foo()'><b>foo</b><br>Test class: org.jpwh.test.querying.advanced.HibernateCriteria</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.advanced.HibernateCriteria@587d1d39</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.CreateExecuteQueries.namedQueries()'><b>namedQueries</b><br>Test class: org.jpwh.test.querying.CreateExecuteQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.CreateExecuteQueries@58c1670b</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.CreateExecuteQueries.pagination()'><b>pagination</b><br>Test class: org.jpwh.test.querying.CreateExecuteQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.CreateExecuteQueries@58c1670b</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.CreateExecuteQueries.parameterBinding()'><b>parameterBinding</b><br>Test class: org.jpwh.test.querying.CreateExecuteQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.CreateExecuteQueries@58c1670b</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.CreateExecuteQueries.queryHints()'><b>queryHints</b><br>Test class: org.jpwh.test.querying.CreateExecuteQueries</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.CreateExecuteQueries@58c1670b</td></tr>
+<tr>
+<td title='org.jpwh.test.querying.sql.JDBCFallback.queryItems()'><b>queryItems</b><br>Test class: org.jpwh.test.querying.sql.JDBCFallback</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.querying.sql.JDBCFallback@9a7504c</td></tr>
+</table><p>
+</body>
+</html>

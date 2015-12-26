@@ -1,0 +1,350 @@
+<html>
+<head>
+<title>TestNG:  Simple Mappings</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Simple Mappings</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>24/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Sat Dec 19 12:05:21 PST 2015</td>
+</tr>
+<tr><td>Total time:</td><td>4 seconds (4579 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='org.jpwh.test.simple.AccessJPAMetamodel.accessDynamicMetamodel()'><b>accessDynamicMetamodel</b><br>Test class: org.jpwh.test.simple.AccessJPAMetamodel</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.AccessJPAMetamodel@59e84876</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.AccessJPAMetamodel.accessStaticMetamodel()'><b>accessStaticMetamodel</b><br>Test class: org.jpwh.test.simple.AccessJPAMetamodel</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.AccessJPAMetamodel@59e84876</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.basicUOW()'><b>basicUOW</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.CRUDMetadataOverrideXML.checkMetadataOverride()'><b>checkMetadataOverride</b><br>Test class: org.jpwh.test.simple.CRUDMetadataOverrideXML</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.CRUDMetadataOverrideXML@2669b199</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.detach()'><b>detach</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.flushModeType()'><b>flushModeType</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.ModelOperations.linkBidAndItem()'><b>linkBidAndItem</b><br>Test class: org.jpwh.test.simple.ModelOperations</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.ModelOperations@6276ae34</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.makePersistent()'><b>makePersistent</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.makeTransient()'><b>makeTransient</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.mergeDetached()'><b>mergeDetached</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.AccessJPAMetamodel.queryStaticMetamodel()'><b>queryStaticMetamodel</b><br>Test class: org.jpwh.test.simple.AccessJPAMetamodel</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.AccessJPAMetamodel@59e84876</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.refresh()'><b>refresh</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.replicate()'><b>replicate</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.retrievePersistent()'><b>retrievePersistent</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.retrievePersistentReference()'><b>retrievePersistentReference</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td><div><pre>org.hibernate.LazyInitializationException: could not initialize proxy - no Session
+	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:148)
+	at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:266)
+	at org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer.invoke(JavassistLazyInitializer.java:68)
+	at org.jpwh.model.simple.Item_$$_jvst38e_1.getName(Item_$$_jvst38e_1.java)
+	at org.jpwh.test.simple.SimpleTransitions.retrievePersistentReference(SimpleTransitions.java:203)
+... Removed 33 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace604571221", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace604571221'><pre>org.hibernate.LazyInitializationException: could not initialize proxy - no Session
+	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:148)
+	at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:266)
+	at org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer.invoke(JavassistLazyInitializer.java:68)
+	at org.jpwh.model.simple.Item_$$_jvst38e_1.getName(Item_$$_jvst38e_1.java)
+	at org.jpwh.test.simple.SimpleTransitions.retrievePersistentReference(SimpleTransitions.java:203)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:122)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:92)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:172)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:104)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:70)
+</pre></div></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.SimpleTransitions.scopeOfIdentity()'><b>scopeOfIdentity</b><br>Test class: org.jpwh.test.simple.SimpleTransitions</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.SimpleTransitions@4590c9c3</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.MappingManyToOne.storeAndLoadBids()'><b>storeAndLoadBids</b><br>Test class: org.jpwh.test.simple.MappingManyToOne</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.MappingManyToOne@39fb3ab6</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.MappingEmbeddables.storeAndLoadInvalidUsers()'><b>storeAndLoadInvalidUsers</b><br>Test class: org.jpwh.test.simple.MappingEmbeddables</td>
+<td><div><pre>org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:112)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:109)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:95)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:207)
+	at org.hibernate.engine.jdbc.batch.internal.NonBatchingBatch.addToBatch(NonBatchingBatch.java:45)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2823)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3323)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:89)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:447)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:333)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:335)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:39)
+	at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1224)
+	at org.hibernate.jpa.spi.AbstractEntityManagerImpl.flush(AbstractEntityManagerImpl.java:1300)
+	at org.jpwh.test.simple.MappingEmbeddables.storeAndLoadInvalidUsers(MappingEmbeddables.java:73)
+Caused by: org.h2.jdbc.JdbcSQLException: NULL not allowed for column &quot;CITY&quot;; SQL statement:
+/* insert org.jpwh.model.simple.User */ insert into USERS (BILLING_CITY, BILLING_STREET, BILLING_ZIPCODE, city, street, zipcode, username, id) values (?, ?, ?, ?, ?, ?, ?, ?) [23502-171]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.table.Column.validateConvertUpdateSequence(Column.java:293)
+	at org.h2.table.Table.validateConvertUpdateSequence(Table.java:692)
+	at org.h2.command.dml.Insert.insertRows(Insert.java:120)
+	at org.h2.command.dml.Insert.update(Insert.java:84)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:75)
+	at org.h2.command.Command.executeUpdate(Command.java:230)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:156)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:142)
+	at bitronix.tm.resource.jdbc.BaseProxyHandlerClass.invoke(BaseProxyHandlerClass.java:64)
+	at com.sun.proxy.$Proxy18.executeUpdate(Unknown Source)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:204)
+	... 44 more
+... Removed 36 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1051770465", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1051770465'><pre>org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:112)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:109)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:95)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:207)
+	at org.hibernate.engine.jdbc.batch.internal.NonBatchingBatch.addToBatch(NonBatchingBatch.java:45)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2823)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3323)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:89)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:447)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:333)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:335)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:39)
+	at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1224)
+	at org.hibernate.jpa.spi.AbstractEntityManagerImpl.flush(AbstractEntityManagerImpl.java:1300)
+	at org.jpwh.test.simple.MappingEmbeddables.storeAndLoadInvalidUsers(MappingEmbeddables.java:73)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:122)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:92)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:172)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:104)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:70)
+Caused by: org.h2.jdbc.JdbcSQLException: NULL not allowed for column &quot;CITY&quot;; SQL statement:
+/* insert org.jpwh.model.simple.User */ insert into USERS (BILLING_CITY, BILLING_STREET, BILLING_ZIPCODE, city, street, zipcode, username, id) values (?, ?, ?, ?, ?, ?, ?, ?) [23502-171]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.table.Column.validateConvertUpdateSequence(Column.java:293)
+	at org.h2.table.Table.validateConvertUpdateSequence(Table.java:692)
+	at org.h2.command.dml.Insert.insertRows(Insert.java:120)
+	at org.h2.command.dml.Insert.update(Insert.java:84)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:75)
+	at org.h2.command.Command.executeUpdate(Command.java:230)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:156)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:142)
+	at sun.reflect.GeneratedMethodAccessor45.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at bitronix.tm.resource.jdbc.BaseProxyHandlerClass.invoke(BaseProxyHandlerClass.java:64)
+	at com.sun.proxy.$Proxy18.executeUpdate(Unknown Source)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:204)
+	... 44 more
+</pre></div></td>
+<td>0</td>
+<td>org.jpwh.test.simple.MappingEmbeddables@5056dfcb</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.MappingEmbeddables.storeAndLoadUsers()'><b>storeAndLoadUsers</b><br>Test class: org.jpwh.test.simple.MappingEmbeddables</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.MappingEmbeddables@5056dfcb</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.CRUD.storeAndQueryItems()'><b>storeAndQueryItems</b><br>Test class: org.jpwh.test.simple.CRUD</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.CRUD@6574b225</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.CRUDMetadataHBMXML.storeAndQueryItems()'><b>storeAndQueryItems</b><br>Test class: org.jpwh.test.simple.CRUDMetadataHBMXML</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.CRUDMetadataHBMXML@7946e1f4</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.CRUDMetadataOverrideXML.storeAndQueryItems()'><b>storeAndQueryItems</b><br>Test class: org.jpwh.test.simple.CRUDMetadataOverrideXML</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.CRUDMetadataOverrideXML@2669b199</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.CRUDMetadataXML.storeAndQueryItems()'><b>storeAndQueryItems</b><br>Test class: org.jpwh.test.simple.CRUDMetadataXML</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.CRUDMetadataXML@61a485d2</td></tr>
+<tr>
+<td title='org.jpwh.test.simple.ModelOperations.validateItem()'><b>validateItem</b><br>Test class: org.jpwh.test.simple.ModelOperations</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.simple.ModelOperations@6276ae34</td></tr>
+</table><p>
+</body>
+</html>

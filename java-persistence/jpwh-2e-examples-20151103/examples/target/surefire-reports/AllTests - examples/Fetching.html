@@ -1,0 +1,184 @@
+<html>
+<head>
+<title>TestNG:  Fetching</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Fetching</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>21/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Sat Dec 19 12:05:41 PST 2015</td>
+</tr>
+<tr><td>Total time:</td><td>2 seconds (2140 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='org.jpwh.test.fetching.NPlusOneSelects.fetchBids()'><b>fetchBids</b><br>Test class: org.jpwh.test.fetching.NPlusOneSelects</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.NPlusOneSelects@2b2948e2</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.EagerQuery.fetchBids()'><b>fetchBids</b><br>Test class: org.jpwh.test.fetching.EagerQuery</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.EagerQuery@eec5a4a</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.Batch.fetchCollectionBatches()'><b>fetchCollectionBatches</b><br>Test class: org.jpwh.test.fetching.Batch</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.Batch@57536d79</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.Subselect.fetchCollectionSubselect()'><b>fetchCollectionSubselect</b><br>Test class: org.jpwh.test.fetching.Subselect</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.Subselect@6ddf90b0</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.CartesianProduct.fetchCollections()'><b>fetchCollections</b><br>Test class: org.jpwh.test.fetching.CartesianProduct</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.CartesianProduct@6c3708b3</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.EagerJoin.fetchEagerJoin()'><b>fetchEagerJoin</b><br>Test class: org.jpwh.test.fetching.EagerJoin</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.EagerJoin@6f1fba17</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.EagerSelect.fetchEagerSelect()'><b>fetchEagerSelect</b><br>Test class: org.jpwh.test.fetching.EagerSelect</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.EagerSelect@185d8b6</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.Batch.fetchProxyBatches()'><b>fetchProxyBatches</b><br>Test class: org.jpwh.test.fetching.Batch</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.Batch@57536d79</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.NPlusOneSelects.fetchUsers()'><b>fetchUsers</b><br>Test class: org.jpwh.test.fetching.NPlusOneSelects</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.NPlusOneSelects@2b2948e2</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.EagerQuery.fetchUsers()'><b>fetchUsers</b><br>Test class: org.jpwh.test.fetching.EagerQuery</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.EagerQuery@eec5a4a</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.Profile.fetchWithProfile()'><b>fetchWithProfile</b><br>Test class: org.jpwh.test.fetching.Profile</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.Profile@5a8e6209</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.ReadOnly.immutableEntity()'><b>immutableEntity</b><br>Test class: org.jpwh.test.fetching.ReadOnly</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.ReadOnly@210366b4</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.LazyInterception.lazyBasic()'><b>lazyBasic</b><br>Test class: org.jpwh.test.fetching.LazyInterception</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.LazyInterception@3b0143d3</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.LazyProxyCollections.lazyCollections()'><b>lazyCollections</b><br>Test class: org.jpwh.test.fetching.LazyProxyCollections</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.LazyProxyCollections@335eadca</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.LazyProxyCollections.lazyEntityProxies()'><b>lazyEntityProxies</b><br>Test class: org.jpwh.test.fetching.LazyProxyCollections</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.LazyProxyCollections@335eadca</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.FetchLoadGraph.loadBidBidderItem()'><b>loadBidBidderItem</b><br>Test class: org.jpwh.test.fetching.FetchLoadGraph</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.FetchLoadGraph@67784306</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.FetchLoadGraph.loadBidBidderItemSellerBids()'><b>loadBidBidderItemSellerBids</b><br>Test class: org.jpwh.test.fetching.FetchLoadGraph</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.FetchLoadGraph@67784306</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.FetchLoadGraph.loadItem()'><b>loadItem</b><br>Test class: org.jpwh.test.fetching.FetchLoadGraph</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.FetchLoadGraph@67784306</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.FetchLoadGraph.loadItemSeller()'><b>loadItemSeller</b><br>Test class: org.jpwh.test.fetching.FetchLoadGraph</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.FetchLoadGraph@67784306</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.LazyInterception.noUserProxy()'><b>noUserProxy</b><br>Test class: org.jpwh.test.fetching.LazyInterception</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.LazyInterception@3b0143d3</td></tr>
+<tr>
+<td title='org.jpwh.test.fetching.ReadOnly.selectiveReadOnly()'><b>selectiveReadOnly</b><br>Test class: org.jpwh.test.fetching.ReadOnly</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.fetching.ReadOnly@210366b4</td></tr>
+</table><p>
+</body>
+</html>

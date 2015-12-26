@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="216" failures="0" name="TestSuite" time="105.599" errors="0" skipped="0">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib"/>
+    <property name="java.vm.version" value="25.66-b17"/>
+    <property name="gopherProxySet" value="false"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="maven.multiModuleProjectDirectory" value="/Users/kkim/github/projects/java-persistence/jpwh-2e-examples-20151103"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=":"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.country" value="US"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="/Users/kkim/github/projects/java-persistence/jpwh-2e-examples-20151103"/>
+    <property name="java.runtime.version" value="1.8.0_66-b17"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
+    <property name="maven.artifact.threads" value="3"/>
+    <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/endorsed"/>
+    <property name="os.arch" value="x86_64"/>
+    <property name="java.io.tmpdir" value="/var/folders/z3/x_06q3jx0z16j3dbmtqmg1sr0000gp/T/"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="os.name" value="Mac OS X"/>
+    <property name="classworlds.conf" value="/usr/local/Cellar/maven/3.3.9/libexec/bin/m2.conf"/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.library.path" value="/Users/kkim/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.11.2"/>
+    <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="user.home" value="/Users/kkim"/>
+    <property name="user.timezone" value="America/Los_Angeles"/>
+    <property name="java.awt.printerjob" value="sun.lwawt.macosx.CPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="kkim"/>
+    <property name="java.class.path" value="/usr/local/Cellar/maven/3.3.9/libexec/boot/plexus-classworlds-2.5.2.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher install"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="en"/>
+    <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_66"/>
+    <property name="java.ext.dirs" value="/Users/kkim/Library/Java/Extensions:/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/ext:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java"/>
+    <property name="sun.boot.class.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/resources.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/rt.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/sunrsasign.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/jsse.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/jce.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/charsets.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/lib/jfr.jar:/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/jre/classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="/usr/local/Cellar/maven/3.3.9/libexec"/>
+    <property name="file.separator" value="/"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeBig"/>
+    <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
+    <property name="sun.cpu.isalist" value=""/>
+  </properties>
+  <testcase classname="org.jpwh.helloworld.HelloWorldHibernate" name="storeLoadMessage" time="0.724"/>
+  <testcase classname="org.jpwh.helloworld.HelloWorldJPA" name="storeLoadMessage" time="0.268"/>
+  <testcase classname="org.jpwh.test.simple.AccessJPAMetamodel" name="accessDynamicMetamodel" time="0"/>
+  <testcase classname="org.jpwh.test.simple.AccessJPAMetamodel" name="accessStaticMetamodel" time="0"/>
+  <testcase classname="org.jpwh.test.simple.AccessJPAMetamodel" name="queryStaticMetamodel" time="0.048"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="basicUOW" time="0.007"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="detach" time="0.011"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="flushModeType" time="0.013"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="makePersistent" time="0.006"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="makeTransient" time="0.008"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="mergeDetached" time="0.01"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="refresh" time="0.013"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="replicate" time="0.01"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="retrievePersistent" time="0.009"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="retrievePersistentReference" time="0.01"/>
+  <testcase classname="org.jpwh.test.simple.SimpleTransitions" name="scopeOfIdentity" time="0.007"/>
+  <testcase classname="org.jpwh.test.simple.CRUD" name="storeAndQueryItems" time="0.006"/>
+  <testcase classname="org.jpwh.test.simple.CRUDMetadataHBMXML" name="storeAndQueryItems" time="0.009"/>
+  <testcase classname="org.jpwh.test.simple.CRUDMetadataOverrideXML" name="checkMetadataOverride" time="0"/>
+  <testcase classname="org.jpwh.test.simple.CRUDMetadataOverrideXML" name="storeAndQueryItems" time="0.007"/>
+  <testcase classname="org.jpwh.test.simple.CRUDMetadataXML" name="storeAndQueryItems" time="0.006"/>
+  <testcase classname="org.jpwh.test.simple.MappingEmbeddables" name="storeAndLoadInvalidUsers" time="0.009"/>
+  <testcase classname="org.jpwh.test.simple.MappingEmbeddables" name="storeAndLoadUsers" time="0.003"/>
+  <testcase classname="org.jpwh.test.simple.MappingManyToOne" name="storeAndLoadBids" time="0.01"/>
+  <testcase classname="org.jpwh.test.simple.ModelOperations" name="linkBidAndItem" time="0"/>
+  <testcase classname="org.jpwh.test.simple.ModelOperations" name="validateItem" time="0.011"/>
+  <testcase classname="org.jpwh.test.inheritance.Embeddable" name="storeAndLoad" time="0.008"/>
+  <testcase classname="org.jpwh.test.inheritance.Joined" name="storeBillingDetailsLoadCreditCards" time="0.007"/>
+  <testcase classname="org.jpwh.test.inheritance.Joined" name="jdbcBillingDetailsSqlQuery" time="0.008"/>
+  <testcase classname="org.jpwh.test.inheritance.Joined" name="jdbcCreditCardSqlQuery" time="0.006"/>
+  <testcase classname="org.jpwh.test.inheritance.Joined" name="storeLoadBillingDetails" time="0.008"/>
+  <testcase classname="org.jpwh.test.inheritance.MappedSuperclass" name="storeBillingDetailsLoadCreditCards" time="0.006"/>
+  <testcase classname="org.jpwh.test.inheritance.MappedSuperclass" name="jdbcSqlQueryBankAccount" time="0.007"/>
+  <testcase classname="org.jpwh.test.inheritance.MappedSuperclass" name="jdbcSqlQueryCreditCard" time="0.008"/>
+  <testcase classname="org.jpwh.test.inheritance.MappedSuperclass" name="storeLoadBillingDetails" time="0.005"/>
+  <testcase classname="org.jpwh.test.inheritance.Mixed" name="storeBillingDetailsLoadCreditCards" time="0.006"/>
+  <testcase classname="org.jpwh.test.inheritance.Mixed" name="jdbcBillingDetailsSqlQuery" time="0.007"/>
+  <testcase classname="org.jpwh.test.inheritance.Mixed" name="storeLoadBillingDetails" time="0.006"/>
+  <testcase classname="org.jpwh.test.inheritance.MixedFetchSelect" name="storeBillingDetailsLoadCreditCards" time="0.009"/>
+  <testcase classname="org.jpwh.test.inheritance.MixedFetchSelect" name="jdbcBillingDetailsSqlQuery" time="0.007"/>
+  <testcase classname="org.jpwh.test.inheritance.MixedFetchSelect" name="storeLoadBillingDetails" time="0.005"/>
+  <testcase classname="org.jpwh.test.inheritance.PolymorphicManyToOne" name="storeAndLoadItemBids" time="0.009"/>
+  <testcase classname="org.jpwh.test.inheritance.PolymorphicOneToMany" name="storeAndLoadItemBids" time="0.029"/>
+  <testcase classname="org.jpwh.test.inheritance.SingleTable" name="storeBillingDetailsLoadCreditCards" time="0.007"/>
+  <testcase classname="org.jpwh.test.inheritance.SingleTable" name="jdbcBillingDetailsSqlQuery" time="0.006"/>
+  <testcase classname="org.jpwh.test.inheritance.SingleTable" name="jdbcCreditCardSqlQuery" time="0.007"/>
+  <testcase classname="org.jpwh.test.inheritance.SingleTable" name="storeLoadBillingDetails" time="0.005"/>
+  <testcase classname="org.jpwh.test.inheritance.TablePerClass" name="storeBillingDetailsLoadCreditCards" time="0.005"/>
+  <testcase classname="org.jpwh.test.inheritance.TablePerClass" name="jdbcBillingDetailsSqlQuery" time="0.005"/>
+  <testcase classname="org.jpwh.test.inheritance.TablePerClass" name="storeLoadBillingDetails" time="0.005"/>
+  <testcase classname="org.jpwh.test.advanced.AccessType" name="storeLoadAccessType" time="0.012"/>
+  <testcase classname="org.jpwh.test.advanced.GeneratedProperties" name="storeLoadInitialPrice" time="0.01"/>
+  <testcase classname="org.jpwh.test.advanced.GeneratedProperties" name="storeLoadLastModified" time="0.008"/>
+  <testcase classname="org.jpwh.test.advanced.TransformingColumns" name="storeLoadTransform" time="0.009"/>
+  <testcase classname="org.jpwh.test.converter.Converters" name="storeAndLoadZipcode" time="0.007"/>
+  <testcase classname="org.jpwh.test.converter.Converters" name="storeLoadMonetaryAmount" time="0.017"/>
+  <testcase classname="org.jpwh.test.advanced.LazyProperties" name="storeLoadLocator" time="0.017"/>
+  <testcase classname="org.jpwh.test.advanced.LazyProperties" name="storeLoadProperties" time="0.005"/>
+  <testcase classname="org.jpwh.test.advanced.BooleanOverride" name="storeLoadOverride" time="0.006"/>
+  <testcase classname="org.jpwh.test.advanced.MappedSubselect" name="loadSubselectEntity" time="0.011"/>
+  <testcase classname="org.jpwh.test.converter.UserTypes" name="storeLoadMonetaryAmount" time="0.007"/>
+  <testcase classname="org.jpwh.test.advanced.NestedComponents" name="storeAndLoadUsers" time="0.002"/>
+  <testcase classname="org.jpwh.test.advanced.DerivedProperties" name="storeLoadFormula" time="0.005"/>
+  <testcase classname="org.jpwh.test.advanced.DerivedProperties" name="storeLoadFormulaSubselect" time="0.005"/>
+  <testcase classname="org.jpwh.test.advanced.Temporal" name="storeLoadTemporal" time="0.005"/>
+  <testcase classname="org.jpwh.test.advanced.Enum" name="storeLoadEnum" time="0.004"/>
+  <testcase classname="org.jpwh.test.collections.BagOfEmbeddables" name="storeLoadCollection" time="0.007"/>
+  <testcase classname="org.jpwh.test.associations.ManyToManyBidirectional" name="storeLoadCategoryItems" time="0.009"/>
+  <testcase classname="org.jpwh.test.collections.BagOfStrings" name="storeLoadCollection" time="0.004"/>
+  <testcase classname="org.jpwh.test.associations.ManyToManyLinkEntity" name="storeLoadCategoryItems" time="0.009"/>
+  <testcase classname="org.jpwh.test.collections.BagOfStringsOrderBy" name="storeLoadCollection" time="0.006"/>
+  <testcase classname="org.jpwh.test.associations.ManyToManyTernary" name="storeLoadCategoryItems" time="0.012"/>
+  <testcase classname="org.jpwh.test.collections.EmbeddableSetOfStrings" name="storeLoadCollection" time="0.004"/>
+  <testcase classname="org.jpwh.test.associations.MapsMapKey" name="storeAndLoadItemBids" time="0.006"/>
+  <testcase classname="org.jpwh.test.collections.ListOfStrings" name="storeLoadCollection" time="0.006"/>
+  <testcase classname="org.jpwh.test.associations.MapsTernary" name="storeLoadCategoryItems" time="0.008"/>
+  <testcase classname="org.jpwh.test.collections.MapOfEmbeddables" name="storeLoadCollection" time="0.007"/>
+  <testcase classname="org.jpwh.test.associations.OneToManyBag" name="storeAndLoadItemBids" time="0.01"/>
+  <testcase classname="org.jpwh.test.collections.MapOfStrings" name="storeLoadCollection" time="0.004"/>
+  <testcase classname="org.jpwh.test.associations.OneToManyBidirectional" name="storeAndLoadItemBids" time="0.009"/>
+  <testcase classname="org.jpwh.test.collections.MapOfStringsEmbeddables" name="storeLoadCollection" time="0.014"/>
+  <testcase classname="org.jpwh.test.associations.OneToManyCascadePersist" name="storeAndLoadItemBids" time="0.008"/>
+  <testcase classname="org.jpwh.test.collections.MapOfStringsOrderBy" name="storeLoadCollection" time="0.004"/>
+  <testcase classname="org.jpwh.test.associations.OneToManyCascadeRemove" name="storeAndLoadItemBids" time="0.007"/>
+  <testcase classname="org.jpwh.test.collections.SetOfEmbeddables" name="storeLoadCollection" time="0.003"/>
+  <testcase classname="org.jpwh.test.associations.OneToManyEmbeddable" name="storeAndLoadUsersShipments" time="0.005"/>
+  <testcase classname="org.jpwh.test.collections.SetOfEmbeddablesOrderBy" name="storeLoadCollection" time="0.005"/>
+  <testcase classname="org.jpwh.test.associations.OneToManyEmbeddableJoinTable" name="storeAndLoadUsersShipments" time="0.005"/>
+  <testcase classname="org.jpwh.test.collections.SetOfStrings" name="storeLoadCollection" time="0.004"/>
+  <testcase classname="org.jpwh.test.associations.OneToManyJoinTable" name="storeAndLoadItemUsers" time="0.006"/>
+  <testcase classname="org.jpwh.test.collections.SetOfStringsOrderBy" name="storeLoadCollection" time="0.003"/>
+  <testcase classname="org.jpwh.test.associations.OneToManyList" name="storeAndLoadItemBids" time="0.005"/>
+  <testcase classname="org.jpwh.test.collections.SortedMapOfStrings" name="storeLoadCollection" time="0.004"/>
+  <testcase classname="org.jpwh.test.associations.OneToManyOnDeleteCascade" name="storeAndLoadItemBids" time="0.008"/>
+  <testcase classname="org.jpwh.test.collections.SortedSetOfStrings" name="storeLoadCollection" time="0.003"/>
+  <testcase classname="org.jpwh.test.associations.OneToManyOrphanRemoval" name="storeAndLoadItemBids" time="0.008"/>
+  <testcase classname="org.jpwh.test.associations.OneToOneForeignGenerator" name="storeAndLoadUserAddress" time="0.004"/>
+  <testcase classname="org.jpwh.test.associations.OneToOneForeignKey" name="storeAndLoadUserAddress" time="0.003"/>
+  <testcase classname="org.jpwh.test.associations.OneToOneForeignKey" name="storeNonUniqueRelationship" time="0.004"/>
+  <testcase classname="org.jpwh.test.associations.OneToOneJoinTable" name="storeAndLoadUserAddress" time="0.005"/>
+  <testcase classname="org.jpwh.test.associations.OneToOneJoinTable" name="storeNonUniqueRelationship" time="0.003"/>
+  <testcase classname="org.jpwh.test.associations.OneToOneSharedPrimaryKey" name="storeAndLoadUserAddress" time="0.003"/>
+  <testcase classname="org.jpwh.test.complexschemas.CompositeKeyEmbeddedId" name="storeLoad" time="0.003"/>
+  <testcase classname="org.jpwh.test.complexschemas.CompositeKeyManyToOne" name="storeLoad" time="0.007"/>
+  <testcase classname="org.jpwh.test.complexschemas.CompositeKeyMapsId" name="storeLoad" time="0.005"/>
+  <testcase classname="org.jpwh.test.complexschemas.CompositeKeyReadOnly" name="storeLoad" time="0.003"/>
+  <testcase classname="org.jpwh.test.complexschemas.CustomSchema" name="configurePersistenceUnit" time="0"/>
+  <testcase classname="org.jpwh.test.complexschemas.CustomSchema" name="storeLoadCheckColumnInvalid" time="0.002"/>
+  <testcase classname="org.jpwh.test.complexschemas.CustomSchema" name="storeLoadCheckSingleRowInvalid" time="0.004"/>
+  <testcase classname="org.jpwh.test.complexschemas.CustomSchema" name="storeLoadCheckSubselectValid" time="0.003"/>
+  <testcase classname="org.jpwh.test.complexschemas.CustomSchema" name="storeLoadDomainInvalid" time="0.001"/>
+  <testcase classname="org.jpwh.test.complexschemas.CustomSchema" name="storeLoadUniqueMultiColumnValid" time="0.001"/>
+  <testcase classname="org.jpwh.test.complexschemas.CustomSchema" name="storeLoadValid" time="0.003"/>
+  <testcase classname="org.jpwh.test.complexschemas.NaturalForeignKey" name="storeLoad" time="0.006"/>
+  <testcase classname="org.jpwh.test.complexschemas.NaturalPrimaryKey" name="storeLoad" time="0.002"/>
+  <testcase classname="org.jpwh.test.complexschemas.SecondaryTable" name="storeAndLoadUsers" time="0.003"/>
+  <testcase classname="org.jpwh.test.concurrency.Locking" name="extendedLock" time="0.015"/>
+  <testcase classname="org.jpwh.test.concurrency.Locking" name="findLock" time="0.008"/>
+  <testcase classname="org.jpwh.test.concurrency.Locking" name="pessimisticReadWrite" time="2.025"/>
+  <testcase classname="org.jpwh.test.concurrency.Locking" name="firstCommitWins" time="0.005"/>
+  <testcase classname="org.jpwh.test.concurrency.Locking" name="forceIncrement" time="0.016"/>
+  <testcase classname="org.jpwh.test.concurrency.Locking" name="manualVersionChecking" time="0.019"/>
+  <testcase classname="org.jpwh.test.concurrency.Versioning" name="firstCommitWins" time="0.005"/>
+  <testcase classname="org.jpwh.test.concurrency.Versioning" name="forceIncrement" time="0.011"/>
+  <testcase classname="org.jpwh.test.concurrency.Versioning" name="manualVersionChecking" time="0.014"/>
+  <testcase classname="org.jpwh.test.concurrency.VersioningAll" name="firstCommitWins" time="0.005"/>
+  <testcase classname="org.jpwh.test.concurrency.VersioningTimestamp" name="firstCommitWins" time="0.005"/>
+  <testcase classname="org.jpwh.test.concurrency.NonTransactional" name="autoCommit" time="0.014"/>
+  <testcase classname="org.jpwh.test.conversation.Detached" name="businessKeyEquality" time="0.002"/>
+  <testcase classname="org.jpwh.test.conversation.ExtendedPC" name="conversationCreateItem" time="0.003"/>
+  <testcase classname="org.jpwh.test.conversation.ExtendedPC" name="conversationEditItem" time="0.006"/>
+  <testcase classname="org.jpwh.test.fetching.Batch" name="fetchCollectionBatches" time="0.011"/>
+  <testcase classname="org.jpwh.test.fetching.Batch" name="fetchProxyBatches" time="0.009"/>
+  <testcase classname="org.jpwh.test.fetching.LazyInterception" name="lazyBasic" time="0.006"/>
+  <testcase classname="org.jpwh.test.fetching.LazyInterception" name="noUserProxy" time="0.005"/>
+  <testcase classname="org.jpwh.test.fetching.CartesianProduct" name="fetchCollections" time="0.008"/>
+  <testcase classname="org.jpwh.test.fetching.LazyProxyCollections" name="lazyCollections" time="0.013"/>
+  <testcase classname="org.jpwh.test.fetching.LazyProxyCollections" name="lazyEntityProxies" time="0.017"/>
+  <testcase classname="org.jpwh.test.fetching.EagerJoin" name="fetchEagerJoin" time="0.008"/>
+  <testcase classname="org.jpwh.test.fetching.NPlusOneSelects" name="fetchBids" time="0.012"/>
+  <testcase classname="org.jpwh.test.fetching.NPlusOneSelects" name="fetchUsers" time="0.012"/>
+  <testcase classname="org.jpwh.test.fetching.EagerQuery" name="fetchBids" time="0.011"/>
+  <testcase classname="org.jpwh.test.fetching.EagerQuery" name="fetchUsers" time="0.01"/>
+  <testcase classname="org.jpwh.test.fetching.Profile" name="fetchWithProfile" time="0.009"/>
+  <testcase classname="org.jpwh.test.fetching.EagerSelect" name="fetchEagerSelect" time="0.007"/>
+  <testcase classname="org.jpwh.test.fetching.ReadOnly" name="immutableEntity" time="0.008"/>
+  <testcase classname="org.jpwh.test.fetching.ReadOnly" name="selectiveReadOnly" time="0.009"/>
+  <testcase classname="org.jpwh.test.fetching.FetchLoadGraph" name="loadBidBidderItem" time="0.013"/>
+  <testcase classname="org.jpwh.test.fetching.FetchLoadGraph" name="loadBidBidderItemSellerBids" time="0.009"/>
+  <testcase classname="org.jpwh.test.fetching.FetchLoadGraph" name="loadItem" time="0.007"/>
+  <testcase classname="org.jpwh.test.fetching.FetchLoadGraph" name="loadItemSeller" time="0.009"/>
+  <testcase classname="org.jpwh.test.fetching.Subselect" name="fetchCollectionSubselect" time="0.01"/>
+  <testcase classname="org.jpwh.test.filtering.AuditLogging" name="writeAuditLog" time="0.012"/>
+  <testcase classname="org.jpwh.test.filtering.Callback" name="notifyPostPersist" time="0.003"/>
+  <testcase classname="org.jpwh.test.filtering.Cascade" name="detachMerge" time="0.007"/>
+  <testcase classname="org.jpwh.test.filtering.Cascade" name="refresh" time="0.007"/>
+  <testcase classname="org.jpwh.test.filtering.Cascade" name="replicate" time="0.004"/>
+  <testcase classname="org.jpwh.test.filtering.DynamicFilter" name="filterCollection" time="0.006"/>
+  <testcase classname="org.jpwh.test.filtering.DynamicFilter" name="filterItems" time="0.008"/>
+  <testcase classname="org.jpwh.test.filtering.Envers" name="auditLogging" time="0.065"/>
+  <testcase classname="org.jpwh.test.querying.CreateExecuteQueries" name="createHibernateQueries" time="0.021"/>
+  <testcase classname="org.jpwh.test.querying.CreateExecuteQueries" name="createNamedQueries" time="0.011"/>
+  <testcase classname="org.jpwh.test.querying.CreateExecuteQueries" name="createQueries" time="0.012"/>
+  <testcase classname="org.jpwh.test.querying.CreateExecuteQueries" name="createTypedQueries" time="0.021"/>
+  <testcase classname="org.jpwh.test.querying.CreateExecuteQueries" name="executeQueries" time="0.018"/>
+  <testcase classname="org.jpwh.test.querying.CreateExecuteQueries" name="namedQueries" time="0.013"/>
+  <testcase classname="org.jpwh.test.querying.CreateExecuteQueries" name="pagination" time="0.013"/>
+  <testcase classname="org.jpwh.test.querying.CreateExecuteQueries" name="parameterBinding" time="0.018"/>
+  <testcase classname="org.jpwh.test.querying.CreateExecuteQueries" name="queryHints" time="0.01"/>
+  <testcase classname="org.jpwh.test.querying.jpql.Joins" name="executeQueries" time="0.022"/>
+  <testcase classname="org.jpwh.test.querying.sql.HibernateSQLQueries" name="executeQueries" time="0.019"/>
+  <testcase classname="org.jpwh.test.querying.sql.HibernateSQLQueries" name="executeRecursiveQueries" time="0.011"/>
+  <testcase classname="org.jpwh.test.querying.jpql.Projection" name="executeQueries" time="0.015"/>
+  <testcase classname="org.jpwh.test.querying.jpql.Projection" name="executeQueriesWithFunctions" time="0.01"/>
+  <testcase classname="org.jpwh.test.querying.sql.JDBCFallback" name="queryItems" time="0.011"/>
+  <testcase classname="org.jpwh.test.querying.jpql.Selection" name="executeQueries" time="0.016"/>
+  <testcase classname="org.jpwh.test.querying.jpql.Grouping" name="executeQueries" time="0.011"/>
+  <testcase classname="org.jpwh.test.querying.criteria.Joins" name="executeQueries" time="0.03"/>
+  <testcase classname="org.jpwh.test.querying.criteria.Projection" name="executeQueries" time="0.021"/>
+  <testcase classname="org.jpwh.test.querying.criteria.Projection" name="executeQueriesWithFunctions" time="0.007"/>
+  <testcase classname="org.jpwh.test.querying.jpql.Restriction" name="executeQueries" time="0.019"/>
+  <testcase classname="org.jpwh.test.querying.jpql.Restriction" name="executeQueriesWithFunctions" time="0.012"/>
+  <testcase classname="org.jpwh.test.querying.criteria.Selection" name="executeQueries" time="0.016"/>
+  <testcase classname="org.jpwh.test.querying.jpql.Subselects" name="executeQueries" time="0.011"/>
+  <testcase classname="org.jpwh.test.querying.criteria.Grouping" name="executeQueries" time="0.013"/>
+  <testcase classname="org.jpwh.test.querying.criteria.Restriction" name="executeQueries" time="0.031"/>
+  <testcase classname="org.jpwh.test.querying.criteria.Restriction" name="executeQueriesWithFunctions" time="0.01"/>
+  <testcase classname="org.jpwh.test.querying.criteria.Subselects" name="executeQueries" time="0.013"/>
+  <testcase classname="org.jpwh.test.querying.advanced.FilterCollections" name="executeQueries" time="0.017"/>
+  <testcase classname="org.jpwh.test.querying.advanced.HibernateCriteria" name="executeQueries" time="0.169"/>
+  <testcase classname="org.jpwh.test.querying.advanced.HibernateCriteria" name="foo" time="0.011"/>
+  <testcase classname="org.jpwh.test.querying.advanced.TransformResults" name="executeQueries" time="0.011"/>
+  <testcase classname="org.jpwh.test.querying.sql.NativeQueries" name="executeQueries" time="0.018"/>
+  <testcase classname="org.jpwh.test.querying.sql.NativeQueries" name="executeRecursiveQueries" time="0.011"/>
+  <testcase classname="org.jpwh.test.querying.criteria.Typesafe" name="executeQueries" time="0.01"/>
+  <testcase classname="org.jpwh.test.customsql.CustomSQL" name="delete" time="0.013"/>
+  <testcase classname="org.jpwh.test.customsql.CustomSQL" name="read" time="0.008"/>
+  <testcase classname="org.jpwh.test.customsql.CustomSQL" name="readRestrictedCollection" time="0.005"/>
+  <testcase classname="org.jpwh.test.customsql.CustomSQL" name="update" time="0.004"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BatchInsertUpdate" name="batchInsertUpdate" time="6.729"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BatchInsertUpdate" name="batchInsertUpdateWithStatelessSession" time="3.317"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BulkStatementsCriteria" name="bulkDelete" time="0.018"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BulkStatementsCriteria" name="bulkUpdate" time="0.01"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BulkStatementsCriteria" name="bulkUpdateVersioned" time="0.006"/>
+  <testcase classname="org.jpwh.test.cache.SecondLevel" name="cacheBehavior" time="0.081"/>
+  <testcase classname="org.jpwh.test.cache.SecondLevel" name="cacheControl" time="0.01"/>
+  <testcase classname="org.jpwh.test.cache.SecondLevel" name="cacheModes" time="0.012"/>
+  <testcase classname="org.jpwh.test.cache.SecondLevel" name="cacheNaturalId" time="0.012"/>
+  <testcase classname="org.jpwh.test.cache.SecondLevel" name="cacheQueryResults" time="0.016"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BulkStatementsSQL" name="bulkUpdate" time="0.008"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BulkStatementsSQL" name="bulkUpdateHibernate" time="0.028"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BulkStatementsJPQL" name="bulkDelete" time="0.01"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BulkStatementsJPQL" name="bulkInsert" time="0.011"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BulkStatementsJPQL" name="bulkUpdate" time="0.007"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BulkStatementsJPQL" name="bulkUpdateInheritance" time="0.008"/>
+  <testcase classname="org.jpwh.test.bulkbatch.BulkStatementsJPQL" name="bulkUpdateVersioned" time="0.005"/>
+</testsuite>

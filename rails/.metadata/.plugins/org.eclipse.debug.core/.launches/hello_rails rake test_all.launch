@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="com.aptana.ruby.debug.core.launchConfigurationType">
+<stringAttribute key="com.aptana.ruby.debug.ATTR_FILE_NAME" value="/usr/local/bin/rake"/>
+<stringAttribute key="com.aptana.ruby.debug.ATTR_PROGRAM_ARGUMENTS" value="test:all"/>
+<stringAttribute key="com.aptana.ruby.debug.ATTR_WORKING_DIR" value="/Users/kkim/github/projects/rails/hello_rails"/>
+<booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
+<mapAttribute key="org.eclipse.debug.core.environmentVariables"/>
+<stringAttribute key="org.eclipse.debug.core.source_locator_id" value="com.aptana.ruby.debug.core.sourceLocator"/>
+<booleanAttribute key="org.eclipse.debug.ui.private" value="true"/>
+</launchConfiguration>

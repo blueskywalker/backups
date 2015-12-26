@@ -30,7 +30,8 @@ public class YamlType  extends LinkedHashMap<String,Object> {
         super(m);
     }
 
-    public YamlType getYaml(String key) {
+    public YamlType getYaml(String key) throws IllegalArgumentException {
+        if (!containsKey(key)) throw new IllegalArgumentException(key);
         return new YamlType(get(key));
     }
 

@@ -1,0 +1,199 @@
+<html>
+<head>
+<title>TestNG:  Inheritance Mappings</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Inheritance Mappings</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>24/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Sat Dec 19 12:05:26 PST 2015</td>
+</tr>
+<tr><td>Total time:</td><td>4 seconds (4951 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='org.jpwh.test.inheritance.Joined.jdbcBillingDetailsSqlQuery()'><b>jdbcBillingDetailsSqlQuery</b><br>Test class: org.jpwh.test.inheritance.Joined</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.Joined@4439f31e</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.Mixed.jdbcBillingDetailsSqlQuery()'><b>jdbcBillingDetailsSqlQuery</b><br>Test class: org.jpwh.test.inheritance.Mixed</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.Mixed@56f4468b</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.MixedFetchSelect.jdbcBillingDetailsSqlQuery()'><b>jdbcBillingDetailsSqlQuery</b><br>Test class: org.jpwh.test.inheritance.MixedFetchSelect</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.MixedFetchSelect@5d5eef3d</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.SingleTable.jdbcBillingDetailsSqlQuery()'><b>jdbcBillingDetailsSqlQuery</b><br>Test class: org.jpwh.test.inheritance.SingleTable</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.SingleTable@100fc185</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.TablePerClass.jdbcBillingDetailsSqlQuery()'><b>jdbcBillingDetailsSqlQuery</b><br>Test class: org.jpwh.test.inheritance.TablePerClass</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.TablePerClass@23ceabc1</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.Joined.jdbcCreditCardSqlQuery()'><b>jdbcCreditCardSqlQuery</b><br>Test class: org.jpwh.test.inheritance.Joined</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.Joined@4439f31e</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.SingleTable.jdbcCreditCardSqlQuery()'><b>jdbcCreditCardSqlQuery</b><br>Test class: org.jpwh.test.inheritance.SingleTable</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.SingleTable@100fc185</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.MappedSuperclass.jdbcSqlQueryBankAccount()'><b>jdbcSqlQueryBankAccount</b><br>Test class: org.jpwh.test.inheritance.MappedSuperclass</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.MappedSuperclass@3a82f6ef</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.MappedSuperclass.jdbcSqlQueryCreditCard()'><b>jdbcSqlQueryCreditCard</b><br>Test class: org.jpwh.test.inheritance.MappedSuperclass</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.MappedSuperclass@3a82f6ef</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.Embeddable.storeAndLoad()'><b>storeAndLoad</b><br>Test class: org.jpwh.test.inheritance.Embeddable</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.Embeddable@6cc4c815</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.PolymorphicManyToOne.storeAndLoadItemBids()'><b>storeAndLoadItemBids</b><br>Test class: org.jpwh.test.inheritance.PolymorphicManyToOne</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.PolymorphicManyToOne@643b1d11</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.PolymorphicOneToMany.storeAndLoadItemBids()'><b>storeAndLoadItemBids</b><br>Test class: org.jpwh.test.inheritance.PolymorphicOneToMany</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.PolymorphicOneToMany@5dfcfece</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.Joined.storeBillingDetailsLoadCreditCards()'><b>storeBillingDetailsLoadCreditCards</b><br>Test class: org.jpwh.test.inheritance.Joined</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.Joined@4439f31e</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.MappedSuperclass.storeBillingDetailsLoadCreditCards()'><b>storeBillingDetailsLoadCreditCards</b><br>Test class: org.jpwh.test.inheritance.MappedSuperclass</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.MappedSuperclass@3a82f6ef</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.Mixed.storeBillingDetailsLoadCreditCards()'><b>storeBillingDetailsLoadCreditCards</b><br>Test class: org.jpwh.test.inheritance.Mixed</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.Mixed@56f4468b</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.MixedFetchSelect.storeBillingDetailsLoadCreditCards()'><b>storeBillingDetailsLoadCreditCards</b><br>Test class: org.jpwh.test.inheritance.MixedFetchSelect</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.MixedFetchSelect@5d5eef3d</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.SingleTable.storeBillingDetailsLoadCreditCards()'><b>storeBillingDetailsLoadCreditCards</b><br>Test class: org.jpwh.test.inheritance.SingleTable</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.SingleTable@100fc185</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.TablePerClass.storeBillingDetailsLoadCreditCards()'><b>storeBillingDetailsLoadCreditCards</b><br>Test class: org.jpwh.test.inheritance.TablePerClass</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.TablePerClass@23ceabc1</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.Joined.storeLoadBillingDetails()'><b>storeLoadBillingDetails</b><br>Test class: org.jpwh.test.inheritance.Joined</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.Joined@4439f31e</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.MappedSuperclass.storeLoadBillingDetails()'><b>storeLoadBillingDetails</b><br>Test class: org.jpwh.test.inheritance.MappedSuperclass</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.MappedSuperclass@3a82f6ef</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.Mixed.storeLoadBillingDetails()'><b>storeLoadBillingDetails</b><br>Test class: org.jpwh.test.inheritance.Mixed</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.Mixed@56f4468b</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.MixedFetchSelect.storeLoadBillingDetails()'><b>storeLoadBillingDetails</b><br>Test class: org.jpwh.test.inheritance.MixedFetchSelect</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.MixedFetchSelect@5d5eef3d</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.SingleTable.storeLoadBillingDetails()'><b>storeLoadBillingDetails</b><br>Test class: org.jpwh.test.inheritance.SingleTable</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.SingleTable@100fc185</td></tr>
+<tr>
+<td title='org.jpwh.test.inheritance.TablePerClass.storeLoadBillingDetails()'><b>storeLoadBillingDetails</b><br>Test class: org.jpwh.test.inheritance.TablePerClass</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.inheritance.TablePerClass@23ceabc1</td></tr>
+</table><p>
+</body>
+</html>

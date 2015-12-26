@@ -1,0 +1,471 @@
+<html>
+<head>
+<title>TestNG:  Collections/Associations</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Collections/Associations</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>36/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Sat Dec 19 12:05:32 PST 2015</td>
+</tr>
+<tr><td>Total time:</td><td>3 seconds (3542 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='org.jpwh.test.associations.MapsMapKey.storeAndLoadItemBids()'><b>storeAndLoadItemBids</b><br>Test class: org.jpwh.test.associations.MapsMapKey</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.MapsMapKey@1a968a59</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToManyBag.storeAndLoadItemBids()'><b>storeAndLoadItemBids</b><br>Test class: org.jpwh.test.associations.OneToManyBag</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToManyBag@604ed9f0</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToManyBidirectional.storeAndLoadItemBids()'><b>storeAndLoadItemBids</b><br>Test class: org.jpwh.test.associations.OneToManyBidirectional</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToManyBidirectional@6eebc39e</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToManyCascadePersist.storeAndLoadItemBids()'><b>storeAndLoadItemBids</b><br>Test class: org.jpwh.test.associations.OneToManyCascadePersist</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToManyCascadePersist@3bfdc050</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToManyCascadeRemove.storeAndLoadItemBids()'><b>storeAndLoadItemBids</b><br>Test class: org.jpwh.test.associations.OneToManyCascadeRemove</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToManyCascadeRemove@77cd7a0</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToManyList.storeAndLoadItemBids()'><b>storeAndLoadItemBids</b><br>Test class: org.jpwh.test.associations.OneToManyList</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToManyList@5c3bd550</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToManyOnDeleteCascade.storeAndLoadItemBids()'><b>storeAndLoadItemBids</b><br>Test class: org.jpwh.test.associations.OneToManyOnDeleteCascade</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToManyOnDeleteCascade@42e26948</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToManyOrphanRemoval.storeAndLoadItemBids()'><b>storeAndLoadItemBids</b><br>Test class: org.jpwh.test.associations.OneToManyOrphanRemoval</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToManyOrphanRemoval@7d9d1a19</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToManyJoinTable.storeAndLoadItemUsers()'><b>storeAndLoadItemUsers</b><br>Test class: org.jpwh.test.associations.OneToManyJoinTable</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToManyJoinTable@4dfa3a9d</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToOneForeignGenerator.storeAndLoadUserAddress()'><b>storeAndLoadUserAddress</b><br>Test class: org.jpwh.test.associations.OneToOneForeignGenerator</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToOneForeignGenerator@53b32d7</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToOneForeignKey.storeAndLoadUserAddress()'><b>storeAndLoadUserAddress</b><br>Test class: org.jpwh.test.associations.OneToOneForeignKey</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToOneForeignKey@685cb137</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToOneJoinTable.storeAndLoadUserAddress()'><b>storeAndLoadUserAddress</b><br>Test class: org.jpwh.test.associations.OneToOneJoinTable</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToOneJoinTable@146ba0ac</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToOneSharedPrimaryKey.storeAndLoadUserAddress()'><b>storeAndLoadUserAddress</b><br>Test class: org.jpwh.test.associations.OneToOneSharedPrimaryKey</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToOneSharedPrimaryKey@6d4b1c02</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToManyEmbeddable.storeAndLoadUsersShipments()'><b>storeAndLoadUsersShipments</b><br>Test class: org.jpwh.test.associations.OneToManyEmbeddable</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToManyEmbeddable@1794d431</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToManyEmbeddableJoinTable.storeAndLoadUsersShipments()'><b>storeAndLoadUsersShipments</b><br>Test class: org.jpwh.test.associations.OneToManyEmbeddableJoinTable</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToManyEmbeddableJoinTable@6a41eaa2</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.ManyToManyBidirectional.storeLoadCategoryItems()'><b>storeLoadCategoryItems</b><br>Test class: org.jpwh.test.associations.ManyToManyBidirectional</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.ManyToManyBidirectional@e25b2fe</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.ManyToManyLinkEntity.storeLoadCategoryItems()'><b>storeLoadCategoryItems</b><br>Test class: org.jpwh.test.associations.ManyToManyLinkEntity</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.ManyToManyLinkEntity@5e3a8624</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.ManyToManyTernary.storeLoadCategoryItems()'><b>storeLoadCategoryItems</b><br>Test class: org.jpwh.test.associations.ManyToManyTernary</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.ManyToManyTernary@91161c7</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.MapsTernary.storeLoadCategoryItems()'><b>storeLoadCategoryItems</b><br>Test class: org.jpwh.test.associations.MapsTernary</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.associations.MapsTernary@6a4f787b</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.BagOfEmbeddables.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.BagOfEmbeddables</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.BagOfEmbeddables@4883b407</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.BagOfStrings.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.BagOfStrings</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.BagOfStrings@57baeedf</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.BagOfStringsOrderBy.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.BagOfStringsOrderBy</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.BagOfStringsOrderBy@5442a311</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.EmbeddableSetOfStrings.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.EmbeddableSetOfStrings</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.EmbeddableSetOfStrings@42d80b78</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.ListOfStrings.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.ListOfStrings</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.ListOfStrings@6093dd95</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.MapOfEmbeddables.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.MapOfEmbeddables</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.MapOfEmbeddables@204f30ec</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.MapOfStrings.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.MapOfStrings</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.MapOfStrings@464bee09</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.MapOfStringsEmbeddables.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.MapOfStringsEmbeddables</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.MapOfStringsEmbeddables@7cd62f43</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.MapOfStringsOrderBy.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.MapOfStringsOrderBy</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.MapOfStringsOrderBy@39c0f4a</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.SetOfEmbeddables.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.SetOfEmbeddables</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.SetOfEmbeddables@548e7350</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.SetOfEmbeddablesOrderBy.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.SetOfEmbeddablesOrderBy</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.SetOfEmbeddablesOrderBy@1bce4f0a</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.SetOfStrings.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.SetOfStrings</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.SetOfStrings@754ba872</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.SetOfStringsOrderBy.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.SetOfStringsOrderBy</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.SetOfStringsOrderBy@4667ae56</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.SortedMapOfStrings.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.SortedMapOfStrings</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.SortedMapOfStrings@343f4d3d</td></tr>
+<tr>
+<td title='org.jpwh.test.collections.SortedSetOfStrings.storeLoadCollection()'><b>storeLoadCollection</b><br>Test class: org.jpwh.test.collections.SortedSetOfStrings</td>
+<td></td>
+<td>0</td>
+<td>org.jpwh.test.collections.SortedSetOfStrings@5622fdf</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToOneForeignKey.storeNonUniqueRelationship()'><b>storeNonUniqueRelationship</b><br>Test class: org.jpwh.test.associations.OneToOneForeignKey</td>
+<td><div><pre>org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:112)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:109)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:95)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:207)
+	at org.hibernate.engine.jdbc.batch.internal.NonBatchingBatch.addToBatch(NonBatchingBatch.java:45)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2823)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3323)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:89)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:447)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:333)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:335)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:39)
+	at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1224)
+	at org.hibernate.jpa.spi.AbstractEntityManagerImpl.flush(AbstractEntityManagerImpl.java:1300)
+	at org.jpwh.test.associations.OneToOneForeignKey.storeNonUniqueRelationship(OneToOneForeignKey.java:80)
+Caused by: org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: &quot;UK_OB48MBNFMUFD417FO9SWUHFBV_INDEX_4 ON PUBLIC.USERS(SHIPPINGADDRESS_ID)&quot;; SQL statement:
+/* insert org.jpwh.model.associations.onetoone.foreignkey.User */ insert into USERS (shippingAddress_id, username, id) values (?, ?, ?) [23505-171]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.index.BaseIndex.getDuplicateKeyException(BaseIndex.java:82)
+	at org.h2.index.TreeIndex.add(TreeIndex.java:62)
+	at org.h2.table.RegularTable.addRow(RegularTable.java:122)
+	at org.h2.command.dml.Insert.insertRows(Insert.java:124)
+	at org.h2.command.dml.Insert.update(Insert.java:84)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:75)
+	at org.h2.command.Command.executeUpdate(Command.java:230)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:156)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:142)
+	at bitronix.tm.resource.jdbc.BaseProxyHandlerClass.invoke(BaseProxyHandlerClass.java:64)
+	at com.sun.proxy.$Proxy18.executeUpdate(Unknown Source)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:204)
+	... 44 more
+... Removed 36 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace2039219899", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace2039219899'><pre>org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:112)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:109)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:95)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:207)
+	at org.hibernate.engine.jdbc.batch.internal.NonBatchingBatch.addToBatch(NonBatchingBatch.java:45)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2823)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3323)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:89)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:447)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:333)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:335)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:39)
+	at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1224)
+	at org.hibernate.jpa.spi.AbstractEntityManagerImpl.flush(AbstractEntityManagerImpl.java:1300)
+	at org.jpwh.test.associations.OneToOneForeignKey.storeNonUniqueRelationship(OneToOneForeignKey.java:80)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:122)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:92)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:172)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:104)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:70)
+Caused by: org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: &quot;UK_OB48MBNFMUFD417FO9SWUHFBV_INDEX_4 ON PUBLIC.USERS(SHIPPINGADDRESS_ID)&quot;; SQL statement:
+/* insert org.jpwh.model.associations.onetoone.foreignkey.User */ insert into USERS (shippingAddress_id, username, id) values (?, ?, ?) [23505-171]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.index.BaseIndex.getDuplicateKeyException(BaseIndex.java:82)
+	at org.h2.index.TreeIndex.add(TreeIndex.java:62)
+	at org.h2.table.RegularTable.addRow(RegularTable.java:122)
+	at org.h2.command.dml.Insert.insertRows(Insert.java:124)
+	at org.h2.command.dml.Insert.update(Insert.java:84)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:75)
+	at org.h2.command.Command.executeUpdate(Command.java:230)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:156)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:142)
+	at sun.reflect.GeneratedMethodAccessor45.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at bitronix.tm.resource.jdbc.BaseProxyHandlerClass.invoke(BaseProxyHandlerClass.java:64)
+	at com.sun.proxy.$Proxy18.executeUpdate(Unknown Source)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:204)
+	... 44 more
+</pre></div></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToOneForeignKey@685cb137</td></tr>
+<tr>
+<td title='org.jpwh.test.associations.OneToOneJoinTable.storeNonUniqueRelationship()'><b>storeNonUniqueRelationship</b><br>Test class: org.jpwh.test.associations.OneToOneJoinTable</td>
+<td><div><pre>org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:112)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:109)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:95)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:207)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2829)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3323)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:89)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:447)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:333)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:335)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:39)
+	at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1224)
+	at org.hibernate.jpa.spi.AbstractEntityManagerImpl.flush(AbstractEntityManagerImpl.java:1300)
+	at org.jpwh.test.associations.OneToOneJoinTable.storeNonUniqueRelationship(OneToOneJoinTable.java:81)
+Caused by: org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: &quot;UK_EW9CIRVGSIAOHXF5NNVFBOS2V_INDEX_3 ON PUBLIC.ITEM_SHIPMENT(ITEM_ID)&quot;; SQL statement:
+/* insert org.jpwh.model.associations.onetoone.jointable.Shipment */ insert into ITEM_SHIPMENT (ITEM_ID, SHIPMENT_ID) values (?, ?) [23505-171]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.index.BaseIndex.getDuplicateKeyException(BaseIndex.java:82)
+	at org.h2.index.TreeIndex.add(TreeIndex.java:62)
+	at org.h2.table.RegularTable.addRow(RegularTable.java:122)
+	at org.h2.command.dml.Insert.insertRows(Insert.java:124)
+	at org.h2.command.dml.Insert.update(Insert.java:84)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:75)
+	at org.h2.command.Command.executeUpdate(Command.java:230)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:156)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:142)
+	at bitronix.tm.resource.jdbc.BaseProxyHandlerClass.invoke(BaseProxyHandlerClass.java:64)
+	at com.sun.proxy.$Proxy18.executeUpdate(Unknown Source)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:204)
+	... 43 more
+... Removed 36 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace161802007", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace161802007'><pre>org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:112)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:109)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:95)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:207)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:2829)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3323)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:89)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:447)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:333)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:335)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:39)
+	at org.hibernate.internal.SessionImpl.flush(SessionImpl.java:1224)
+	at org.hibernate.jpa.spi.AbstractEntityManagerImpl.flush(AbstractEntityManagerImpl.java:1300)
+	at org.jpwh.test.associations.OneToOneJoinTable.storeNonUniqueRelationship(OneToOneJoinTable.java:81)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:84)
+	at org.testng.internal.Invoker.invokeMethod(Invoker.java:714)
+	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:901)
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1231)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:127)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:111)
+	at org.testng.TestRunner.privateRun(TestRunner.java:767)
+	at org.testng.TestRunner.run(TestRunner.java:617)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:334)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:329)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:291)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:240)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1224)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1149)
+	at org.testng.TestNG.run(TestNG.java:1057)
+	at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:122)
+	at org.apache.maven.surefire.testng.TestNGXmlTestSuite.execute(TestNGXmlTestSuite.java:92)
+	at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:101)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)
+	at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:172)
+	at org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:104)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:70)
+Caused by: org.h2.jdbc.JdbcSQLException: Unique index or primary key violation: &quot;UK_EW9CIRVGSIAOHXF5NNVFBOS2V_INDEX_3 ON PUBLIC.ITEM_SHIPMENT(ITEM_ID)&quot;; SQL statement:
+/* insert org.jpwh.model.associations.onetoone.jointable.Shipment */ insert into ITEM_SHIPMENT (ITEM_ID, SHIPMENT_ID) values (?, ?) [23505-171]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.index.BaseIndex.getDuplicateKeyException(BaseIndex.java:82)
+	at org.h2.index.TreeIndex.add(TreeIndex.java:62)
+	at org.h2.table.RegularTable.addRow(RegularTable.java:122)
+	at org.h2.command.dml.Insert.insertRows(Insert.java:124)
+	at org.h2.command.dml.Insert.update(Insert.java:84)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:75)
+	at org.h2.command.Command.executeUpdate(Command.java:230)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdateInternal(JdbcPreparedStatement.java:156)
+	at org.h2.jdbc.JdbcPreparedStatement.executeUpdate(JdbcPreparedStatement.java:142)
+	at sun.reflect.GeneratedMethodAccessor45.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at bitronix.tm.resource.jdbc.BaseProxyHandlerClass.invoke(BaseProxyHandlerClass.java:64)
+	at com.sun.proxy.$Proxy18.executeUpdate(Unknown Source)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:204)
+	... 43 more
+</pre></div></td>
+<td>0</td>
+<td>org.jpwh.test.associations.OneToOneJoinTable@146ba0ac</td></tr>
+</table><p>
+</body>
+</html>

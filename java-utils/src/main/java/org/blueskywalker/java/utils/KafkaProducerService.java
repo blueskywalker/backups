@@ -1,3 +1,8 @@
+/*
+ *  Copyright 2015
+ *  Created by Sysomos Grid
+ *
+ */
 package org.blueskywalker.java.utils;
 
 import java.util.Properties;
@@ -12,6 +17,8 @@ import kafka.utils.VerifiableProperties;
  * @author kkim
  */
 public class KafkaProducerService extends ThreadService {
+
+    public static final String PRODUCER_TOPIC = "producer.topic";
 
     public static class SimplePartitioner implements Partitioner {
 
@@ -30,25 +37,19 @@ public class KafkaProducerService extends ThreadService {
         }
     }
 
-    public KafkaProducerService(Runnable[] runners) {
-        super(runners);
+    final protected KafkaProducer producer;
 
+    public KafkaProducerService(Runnable[] runners, Properties properties) {
+        super(runners, properties);
+        producer = new KafkaProducer(properties);
     }
 
-    public static abstract class KafkaProducerRunnable implements Runnable {
-
-        public static final String PRODUCER_TOPIC = "producer.topic";
+    public static class KafkaProducer {
         protected final String topic;
         protected final Producer<String, String> producer;
         protected final ProducerConfig config;
-        protected final Object option;
 
-        public KafkaProducerRunnable(Properties properties) {
-            this(properties,null);
-        }
-
-        public KafkaProducerRunnable(Properties properties,Object option) {
-            this.option=option;
+        public KafkaProducer(Properties properties) {
             topic = properties.getProperty(PRODUCER_TOPIC);
             if (topic == null) {
                 throw new IllegalArgumentException(PRODUCER_TOPIC);
@@ -58,16 +59,29 @@ public class KafkaProducerService extends ThreadService {
             properties.put("partitioner.class", SimplePartitioner.class.getName());
             config = new ProducerConfig(properties);
 
-            producer = new Producer<String, String>(config);
+            producer = new Producer<>(config);
+
         }
 
         public void send(String msg) {
-            producer.send(new KeyedMessage<String, String>(topic, "random", msg));
+            producer.send(new KeyedMessage<>(topic,"", msg));
         }
-
-        public Object getOption() {
-            return option;
-        }
-
     }
+
+    public KafkaProducer getProducer() {
+        return producer;
+    }
+
+    public static abstract class KafkaProducerRunnable implements Runnable {
+        final KafkaProducer producer;
+
+        public KafkaProducerRunnable(KafkaProducer producer) {
+            this.producer=producer;
+        }
+
+        public void send(String msg) {
+            producer.send(msg);
+        }
+    }
+
 }

@@ -1,0 +1,3 @@
+
+mongodb:
+    connect.uri: mongodb://stgmongodb001:27017,stgmongodb002:27017,stgmongodb003:27017/profileTest
