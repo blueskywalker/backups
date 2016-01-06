@@ -9,7 +9,18 @@
     <version>1.0</version>
 
     <packaging>maven-plugin</packaging>
-
+    <distributionManagement>
+        <repository>
+            <id>deployment</id>
+            <name>Grid Release Deployment</name>
+            <url>http://10.1.86.62:8081/nexus/content/repositories/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>deployment</id>
+            <name>Grid Snapshot Deployment</name>
+            <url>http://10.1.86.62:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
     <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
@@ -44,7 +55,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
-                <version>3.2</version>
+                <version>3.3</version>
                 <configuration>
                     <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
                     <goalPrefix>map</goalPrefix>

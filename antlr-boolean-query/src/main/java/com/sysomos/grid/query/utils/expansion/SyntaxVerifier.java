@@ -1,9 +1,6 @@
 package com.sysomos.grid.query.utils.expansion;
 
 
-
-import com.sysomos.gird.query.utils.expansion.BooleanQueryLexer;
-import com.sysomos.gird.query.utils.expansion.BooleanQueryParser;
 import org.antlr.v4.runtime.*;
 import org.apache.commons.io.IOUtils;
 

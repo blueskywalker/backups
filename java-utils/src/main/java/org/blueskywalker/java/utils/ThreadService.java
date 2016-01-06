@@ -17,15 +17,14 @@ public class ThreadService  {
     protected final Runnable [] runners;
     protected final Object param;
 
-    public interface ThreadServiceRunnable extends Runnable {
-        void clone();
-    }
+
     public ThreadService(Runnable[] runners,int priority,Object param) {
         this.runners = runners;
+        this.param=param;
         service = new ServiceThread[runners.length];
         setPriority(priority);
-        this.param=param;
     }
+
     public ThreadService(Runnable[] runners,int priority) {
         this(runners,priority,null);
     }
@@ -37,6 +36,8 @@ public class ThreadService  {
     public ThreadService(Runnable[] runners,Object param) {
         this(runners,Thread.NORM_PRIORITY,param);
     }
+
+
 
     protected void setPriority(int priority) {
         for (int i = 0; i < service.length; i++) {

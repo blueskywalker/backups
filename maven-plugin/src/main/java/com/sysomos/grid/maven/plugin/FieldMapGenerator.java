@@ -5,6 +5,8 @@ import com.google.common.collect.Lists;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.apache.maven.plugins.annotations.Execute;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -34,46 +36,54 @@ public class FieldMapGenerator extends AbstractMojo {
             defaultValue = "${project.basedir}/src/main/resources")
     private File sourceDirectory;
 
-    @Parameter(defaultValue = "${project.build.directory}/generated-sources/src/main/java")
+    @Parameter(defaultValue = "${project.build.directory}/generated-sources/src")
     private File outputDirectory;
 
 
-    protected Set<String> getMembers(Map<String,Map<String,String>> maps) {
+    protected Set<String> getMembers(Map<String, Map<String, String>> maps) {
         Set<String> ret = new HashSet<String>();
-        for(Map<String,String> map:maps.values()) {
-            ret.addAll(map.keySet());
+
+        for (Map<String, String> map : maps.values()) {
+            if (map != null)
+                ret.addAll(map.keySet());
         }
         return ret;
     }
 
-    protected String newInstance(String field,Set<String> keys,Map<String,String> value) {
+    protected String newInstance(String field, Set<String> keys, Map<String, String> value) {
         ArrayList<String> argList = new ArrayList<String>();
-        for(String key:keys) {
-            argList.add(value.containsKey(key)?value.get(key):"");
+        if (value== null) {
+            value = new HashMap<String, String>();
+        }
+        for (String key : keys) {
+            String arg = value.containsKey(key) ?
+                    value.get(key)==null?"null":String.format("\"%s\"", value.get(key)):
+                    "null";
+            argList.add(arg);
         }
         String args = Joiner.on(",").join(argList);
-        return String.format("%s(\"%s\")",field,args);
+        return String.format("%s(%s)", field, args);
     }
 
-    protected String getInstance(Set<String> memberSet,Map<String, Map<String,String>> fields) {
+    protected String getInstance(Set<String> memberSet, Map<String, Map<String, String>> fields) {
         List<String> valueList = new ArrayList<String>();
-        for (Map.Entry<String, Map<String,String>> keyValue : fields.entrySet()) {
-            valueList.add(newInstance(keyValue.getKey(),memberSet,keyValue.getValue()));
+        for (Map.Entry<String, Map<String, String>> keyValue : fields.entrySet()) {
+            valueList.add(newInstance(keyValue.getKey(), memberSet, keyValue.getValue()));
         }
 
         return Joiner.on(",").join(valueList);
     }
 
-    protected String getConstructor(String name,Set<String>members) {
+    protected String getConstructor(String name, Set<String> members) {
         StringBuffer sb = new StringBuffer();
         ArrayList<String> argList = new ArrayList<String>();
-        for(String arg : members) {
-            argList.add(String.format("String %s",arg));
+        for (String arg : members) {
+            argList.add(String.format("String %s", arg));
         }
         String args = Joiner.on(",").join(argList);
-        sb.append(String.format("%s(%s) {",name,args));
-        for(String arg : members) {
-            sb.append(String.format("this.%s=%s;",arg,arg));
+        sb.append(String.format("%s(%s) {", name, args));
+        for (String arg : members) {
+            sb.append(String.format("this.%s=%s;", arg, arg));
         }
         sb.append("}");
         return sb.toString();
@@ -81,22 +91,22 @@ public class FieldMapGenerator extends AbstractMojo {
 
     protected String getMember(Set<String> members) {
         ArrayList<String> memberList = new ArrayList<String>();
-        for(String member:members) {
-            memberList.add(String.format("private String %s;",member));
+        for (String member : members) {
+            memberList.add(String.format("final private String %s;", member));
         }
         return Joiner.on("\n").join(memberList);
     }
 
     protected String getFirstUpperCase(String word) {
-        char [] chararray = word.toCharArray();
+        char[] chararray = word.toCharArray();
         chararray[0] = Character.toUpperCase(chararray[0]);
         return new String(chararray);
     }
 
     protected String getGetter(Set<String> members) {
         ArrayList<String> memberList = new ArrayList<String>();
-        for(String member:members) {
-            memberList.add(String.format("String get%s() { return %s; }",
+        for (String member : members) {
+            memberList.add(String.format("public String get%s() { return %s; }",
                     getFirstUpperCase(member),
                     member));
         }
@@ -104,27 +114,29 @@ public class FieldMapGenerator extends AbstractMojo {
         return Joiner.on("\n").join(memberList);
     }
 
-    protected void generate(FileWriter writer, String classPath, Map<String, Map<String,String>> fields) throws IOException {
+    protected void generate(FileWriter writer, String classPath, Map<String, Map<String, String>> fields) throws IOException {
         String[] classArray = classPath.split("\\.");
-        if(classArray.length>1) {
+        if (classArray.length > 1) {
             String packagePath = Joiner.on(".").join(
                     Arrays.copyOfRange(classArray, 0, classArray.length - 1));
-                writer.write(String.format("package  %s;\n", packagePath));
+            writer.write(String.format("package  %s;\n", packagePath));
         }
 
-        if(classArray.length==0)
+        if (classArray.length == 0)
             return;
 
         String className = classArray[classArray.length - 1];
-        writer.write(String.format("public enum %s  {\n",className));
+        writer.write(String.format("public enum %s  {\n", className));
+
+        assert fields != null;
 
         Set<String> memberSet = getMembers(fields);
 
         if (fields.size() > 0) {
-            writer.write(String.format("%s;\n",getInstance(memberSet,fields)));
-            writer.write(String.format("%s\n",getMember(memberSet)));
-            writer.write(String.format("%s\n",getConstructor(className,memberSet)));
-            writer.write(String.format("%s\n",getGetter(memberSet)));
+            writer.write(String.format("%s;\n", getInstance(memberSet, fields)));
+            writer.write(String.format("%s\n", getMember(memberSet)));
+            writer.write(String.format("%s\n", getConstructor(className, memberSet)));
+            writer.write(String.format("%s\n", getGetter(memberSet)));
         }
 
         writer.write("}");
@@ -138,6 +150,7 @@ public class FieldMapGenerator extends AbstractMojo {
             outputDirectory.mkdirs();
         }
 
+        setLog(new SystemStreamLog());
         for (String map : maps) {
             File mapfile = new File(sourceDirectory, map);
             if (mapfile.isFile()) {
@@ -149,14 +162,14 @@ public class FieldMapGenerator extends AbstractMojo {
                     if (definition.containsKey("class") &&
                             definition.containsKey("fields")) {
                         String fullPathClass = (String) definition.get("class");
-                        File classPath = new File(outputDirectory, String.format("%s.java",fullPathClass.replace(".", "/")));
+                        File classPath = new File(outputDirectory, String.format("%s.java", fullPathClass.replace(".", "/")));
                         if (!classPath.getParentFile().exists()) {
                             classPath.getParentFile().mkdirs();
                         }
 
                         project.addCompileSourceRoot(outputDirectory.getPath());
                         FileWriter writer = new FileWriter(classPath);
-                        generate(writer, fullPathClass, (Map<String, Map<String,String>>) definition.get("fields"));
+                        generate(writer, fullPathClass, (Map<String, Map<String, String>>) definition.get("fields"));
                     }
 
                 } catch (FileNotFoundException e) {

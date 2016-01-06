@@ -1,7 +1,5 @@
 package com.sysomos.grid.query.utils.expansion;
 
-import com.sysomos.gird.query.utils.expansion.BooleanQueryBaseListener;
-import com.sysomos.gird.query.utils.expansion.BooleanQueryParser;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
