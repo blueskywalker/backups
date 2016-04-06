@@ -46,7 +46,7 @@ public class QueryExpansionListener extends BooleanQueryBaseListener {
                     default:
                         expansion=query;
                 }
-                output.append(expansion+ " ");
+                output.append(expansion);
                 break;
             case  BooleanQueryParser.QUOTE:
                 query = token.getText().substring(1,token.getText().length()-1);
@@ -60,7 +60,7 @@ public class QueryExpansionListener extends BooleanQueryBaseListener {
                     default:
                         expansion=query;
                 }
-                output.append(expansion+ " ");
+                output.append(expansion);
                 break;
             case BooleanQueryParser.FIELD:
                 Matcher matcher=fieldQueryPattern.matcher(token.getText());
@@ -76,10 +76,16 @@ public class QueryExpansionListener extends BooleanQueryBaseListener {
                 } else {
                     expansion=token.getText();
                 }
-                output.append(expansion + " ");
+                output.append(expansion);
+                break;
+            case BooleanQueryParser.NEAR:
+            case BooleanQueryParser.NUMBER:
+            case BooleanQueryParser.LPAREN:
+            case BooleanQueryParser.RPAREN:
+                output.append(token.getText());
                 break;
             default:
-                output.append(token.getText()+" ");
+                output.append(" " + token.getText()+ " ");
         }
     }
 

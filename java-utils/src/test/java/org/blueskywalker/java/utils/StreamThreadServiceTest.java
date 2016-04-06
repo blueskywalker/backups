@@ -1,9 +1,8 @@
 package org.blueskywalker.java.utils;
 
+import org.blueskywalker.java.utils.thread.StreamThreadService;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by kkim on 1/2/16.

@@ -13,12 +13,12 @@
         <repository>
             <id>deployment</id>
             <name>Grid Release Deployment</name>
-            <url>http://10.1.86.62:8081/nexus/content/repositories/releases</url>
+            <url>http://stgnexus.grid.stg.yyz.corp.pvt:8081/nexus/content/repositories/releases</url>
         </repository>
         <snapshotRepository>
             <id>deployment</id>
             <name>Grid Snapshot Deployment</name>
-            <url>http://10.1.86.62:8081/nexus/content/repositories/snapshots/</url>
+            <url>http://stgnexus.grid.stg.yyz.corp.pvt:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <dependencies>

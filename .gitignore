@@ -4,21 +4,5 @@
 *.jar
 
 *.iml
-
-
-antlr-boolean-query/target
-
-
-java-utils/.idea/*
-antlr-boolean-query/.idea/*
-hbase/.idea/*
-luceneIndexer/.idea/*
-solr-core/.idea/*
-groovy/.idea/*
-guava/.idea/*
-social-utilities/.idea/*
-avro-test/.idea/*
-twitter-backup/.idea/*
-maven-plugin/.idea/*
-kafka-bridge/.idea/*
-rails/sodibee/.idea/*
+.idea
+target/

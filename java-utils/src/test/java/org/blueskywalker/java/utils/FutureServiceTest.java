@@ -1,10 +1,11 @@
 package org.blueskywalker.java.utils;
 
+import org.blueskywalker.java.utils.thread.FutureService;
 import org.junit.Test;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.*;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by kkim on 1/2/16.
@@ -39,23 +40,14 @@ public class FutureServiceTest {
 
     @Test
     public void testFutureService () throws ExecutionException, InterruptedException {
-        FutureService<String> service = new FutureService<>();
-        service.execute(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                return "hello";
-            }
-        });
-        service.execute(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-                return "world";
-            }
-        });
+        final FutureService<String> service = new FutureService<>();
+        service.submit(()->{return "hello";});
+        service.submit(()->{return "world";});
 
         for(String result : service.getResults()) {
             System.out.println(result);
         }
+
 
         service.shutdownAndAwaitTermination();
     }
