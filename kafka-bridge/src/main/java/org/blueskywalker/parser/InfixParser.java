@@ -119,7 +119,7 @@ public class InfixParser {
     public static void main(String[] args) {
         try {
 
-            List<String> tokens = InfixParser.tokenizer(" 3 + 4 * 3 + 50 / 5 + 4 * 3 - 12 + ");
+            List<String> tokens = InfixParser.tokenizer(" 3 + 4 * 3 + 50 / 5 + 4 * 3 - 12  ");
 //            System.out.println(tokens);
 
 

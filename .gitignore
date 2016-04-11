@@ -6,3 +6,5 @@
 *.iml
 .idea
 target/
+kafka-bridge/.idea
+python/pydata/.idea
